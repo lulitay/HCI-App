@@ -1,0 +1,4 @@
+#Sun Nov 19 17:13:56 ART 2017
+base.0=C\:\\Users\\Lucia\\Desktop\\MyFirstAppApi\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\8
+renamed.0=classes.dex
+file.0=C\:\\Users\\Lucia\\Desktop\\MyFirstAppApi\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\8\\classes.dex
