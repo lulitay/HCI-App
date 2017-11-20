@@ -69,6 +69,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
+            android:id="@+id/linearLayout2"
             android:layout_height="match_parent"
             android:orientation="horizontal" />
     </HorizontalScrollView>
@@ -101,6 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:background="@android:color/background_light"
+        android:onClick="openSwitchedOn"
         android:text="@string/Switched"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/devices" />
