@@ -72,6 +72,7 @@
                 android:text="Accept"
                 android:textColor="@android:color/background_light"
                 android:textSize="20dp"
+                android:onClick="acceptLamp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/CancelButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
