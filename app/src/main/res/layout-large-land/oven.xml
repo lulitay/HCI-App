@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="1dp"
+        android:layout_height="288dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ovenTitle" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/deviceToolbar8"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <TextView
+        android:id="@+id/ovenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deviceToolbar8" />
+
+    <TextView
+        android:id="@+id/ovenDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ovenTitle" android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Status"
+        android:textSize="26sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/statusOven"
+        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/textView37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Temperature"
+        android:textSize="26sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/temperatureOven"
+        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/textView38"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="HeatMode"
+        android:textSize="26sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/heatMode"
+        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="GrillMode"
+        android:textSize="26sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/grillMode"
+        app:layout_constraintLeft_toRightOf="@+id/view2" android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/textView40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="ConvMode"
+        android:textSize="26sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/convMode"
+        app:layout_constraintLeft_toRightOf="@+id/view2" android:layout_marginStart="16dp"/>
+
+    <ToggleButton
+        android:id="@+id/statusOven"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:layout_marginRight="24dp"
+        android:text="ToggleButton"
+        app:layout_constraintRight_toLeftOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/ovenDescription" android:layout_marginEnd="24dp"/>
+
+    <EditText
+        android:id="@+id/temperatureOven"
+        android:layout_width="130dp"
+        android:layout_height="37dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="temperature"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintRight_toLeftOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/textView36" android:layout_marginEnd="24dp"/>
+
+    <Spinner
+        android:id="@+id/heatMode"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="60dp"
+        android:entries="@array/OvenMode"
+        app:layout_constraintRight_toLeftOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/textView37" android:layout_marginEnd="24dp"/>
+
+    <Spinner
+        android:id="@+id/grillMode"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/OvenGrillMode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ovenDescription" />
+
+    <Spinner
+        android:id="@+id/convMode"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="60dp"
+        android:entries="@array/OvenConvMode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
+    <Button
+        android:id="@+id/cancelButton3"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="22dp"
+        android:background="@android:color/background_light"
+        android:text="Cancel"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/acceptOven"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/acceptOven"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/colorAccent"
+        android:text="Accept"
+        android:textColor="@android:color/background_light"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/cancelButton3" />
+</android.support.constraint.ConstraintLayout>

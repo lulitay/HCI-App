@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="595dp"
+        android:layout_height="249dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/OvenTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="TextView"
+                android:textSize="50dp"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/AcceptOven"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:text="Accept"
+                android:textColor="@android:color/background_light"
+                android:textSize="20dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/CancelButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/CancelButton" />
+
+            <EditText
+                android:id="@+id/TemperatureOven"
+                android:layout_width="130dp"
+                android:layout_height="37dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="temperature"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/StatusOven" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="Status"
+                android:textSize="26dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/StatusOven"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <Spinner
+                android:id="@+id/HeatMode"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="20dp"
+                android:entries="@array/OvenMode"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TemperatureOven" />
+
+            <ToggleButton
+                android:id="@+id/StatusOven"
+                android:layout_width="130dp"
+                android:layout_height="45dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="8dp"
+                android:text="ToggleButton"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/OvenDescription" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="HeatMode"
+                android:textSize="26dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/HeatMode"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="GrillMode"
+                android:textSize="26dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/GrillMode"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <Spinner
+                android:id="@+id/ConvMode"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="20dp"
+                android:entries="@array/OvenConvMode"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/GrillMode" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="ConvMode"
+                android:textSize="26dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/ConvMode"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <Button
+                android:id="@+id/CancelButton"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/background_light"
+                android:text="Cancel"
+                android:textColor="@color/colorAccent"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/AcceptOven"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+            <Spinner
+                android:id="@+id/GrillMode"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="20dp"
+                android:entries="@array/OvenGrillMode"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/HeatMode" />
+
+            <TextView
+                android:id="@+id/OvenDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textSize="18dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/OvenTitle" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="Temperature"
+                android:textSize="26dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/TemperatureOven"
+                app:layout_constraintLeft_toLeftOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/DeviceToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+</android.support.constraint.ConstraintLayout>

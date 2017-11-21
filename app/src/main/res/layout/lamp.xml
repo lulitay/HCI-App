@@ -23,7 +23,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
-        android:textSize="50dp"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar" />
@@ -35,7 +35,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="110dp"
         android:text="TextView"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar" />
 
@@ -46,9 +46,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="36dp"
         android:text="Status"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LampDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/LampDescription" android:layout_marginStart="16dp"/>
 
     <TextView
         android:id="@+id/textView18"
@@ -57,7 +57,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
         android:text="Brightness"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
@@ -68,7 +68,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
         android:text="Color"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
@@ -81,7 +81,7 @@
         android:background="@android:color/background_light"
         android:text="Cancel"
         android:textColor="@color/colorAccent"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -94,7 +94,7 @@
         android:background="@color/colorAccent"
         android:text="Accept"
         android:textColor="@android:color/background_light"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/CancelButton" />
 
@@ -105,7 +105,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="36dp"
         android:text="ToggleButton"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LampDescription" />
 
@@ -118,7 +118,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Brightness"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/StatusLamp" />

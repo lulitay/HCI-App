@@ -5,12 +5,16 @@ package com.example.myfirstapp;
  */
 
 public class Device {
+    private String id;
     private String name;
-    private String type;
+    private String typeId;
+    private String meta;
 
-    public Device(String name, String type){
+    public Device(String id, String name, String typeId, String meta){
+        this.id = id;
         this.name = name;
-        this.type = type;
+        this.typeId = typeId;
+        this.meta = meta;
     }
 
     public String getName(){
@@ -18,6 +22,28 @@ public class Device {
     }
 
     public String getType(){
-        return type;
+        return typeId;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getMeta(){
+        return meta;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public void setType(String typeId) {
+        this.typeId = typeId;
+    }
+    public void setMeta(String meta) {
+        this.meta = meta;
+    }
+
 }

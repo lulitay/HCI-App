@@ -23,7 +23,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
-        android:textSize="50dp"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar" />
@@ -35,9 +35,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="110dp"
         android:text="TextView"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar" android:layout_marginStart="16dp"/>
 
     <TextView
         android:id="@+id/textView12"
@@ -46,9 +46,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp"
         android:text="Status"
-        android:textSize="26dp"
+        android:textSize="26sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/OvenDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/OvenDescription" android:layout_marginStart="16dp"/>
 
     <TextView
         android:id="@+id/textView13"
@@ -57,9 +57,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="26dp"
         android:text="Temperature"
-        android:textSize="26dp"
+        android:textSize="26sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintTop_toBottomOf="@+id/textView12" android:layout_marginStart="16dp"/>
 
     <TextView
         android:id="@+id/textView14"
@@ -68,9 +68,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="26dp"
         android:text="HeatMode"
-        android:textSize="26dp"
+        android:textSize="26sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@+id/textView13" android:layout_marginStart="16dp"/>
 
     <TextView
         android:id="@+id/textView15"
@@ -79,7 +79,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="26dp"
         android:text="GrillMode"
-        android:textSize="26dp"
+        android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -90,9 +90,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="26dp"
         android:text="ConvMode"
-        android:textSize="26dp"
+        android:textSize="26sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15" android:layout_marginStart="16dp"/>
 
     <ToggleButton
         android:id="@+id/StatusOven"
@@ -157,7 +157,7 @@
         android:background="@android:color/background_light"
         android:text="Cancel"
         android:textColor="@color/colorAccent"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -170,7 +170,7 @@
         android:background="@color/colorAccent"
         android:text="Accept"
         android:textColor="@android:color/background_light"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/CancelButton" />
 </android.support.constraint.ConstraintLayout>

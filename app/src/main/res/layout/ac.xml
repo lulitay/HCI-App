@@ -23,7 +23,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
-        android:textSize="50dp"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
         android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar" android:layout_marginStart="16dp"/>
 
     <TextView
         android:id="@+id/textView5"
@@ -47,9 +47,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="26dp"
         android:text="@string/Status"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AcDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/AcDescription" android:layout_marginStart="16dp"/>
 
     <ToggleButton
         android:id="@+id/AcStatus"
@@ -73,7 +73,7 @@
         android:background="?attr/colorBackgroundFloating"
         android:text="@string/Cancel"
         android:textColor="@color/colorAccent"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -86,7 +86,7 @@
         android:background="@color/colorAccent"
         android:text="@string/Accept"
         android:textColor="@android:color/background_light"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/CancelDoor" />
 
@@ -97,7 +97,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="14dp"
         android:text="Temperature"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -108,9 +108,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="14dp"
         android:text="Mode"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" android:layout_marginStart="16dp"/>
 
     <TextView
         android:id="@+id/textView7"
@@ -119,9 +119,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="14dp"
         android:text="VerticalSwing"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" android:layout_marginStart="16dp"/>
 
     <TextView
         android:id="@+id/textView8"
@@ -130,9 +130,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="14dp"
         android:text="HorizontalSwing"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/textView7" android:layout_marginStart="16dp"/>
 
     <Spinner
         android:id="@+id/ModeAc"
@@ -165,9 +165,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="14dp"
         android:text="Fan Speed"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" android:layout_marginStart="16dp"/>
 
     <Spinner
         android:id="@+id/VerticalSwing"

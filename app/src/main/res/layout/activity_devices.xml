@@ -42,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:background="@android:color/background_light"
+        android:onClick="openSwitchedOn"
         android:text="@string/Switched"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/devices" />
