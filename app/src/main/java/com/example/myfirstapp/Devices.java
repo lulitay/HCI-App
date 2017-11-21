@@ -18,14 +18,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Devices extends AppCompatActivity {
 
     Context context;
+    String actualIdDevice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +51,7 @@ public class Devices extends AppCompatActivity {
                 new GsonRequest<getDevicesResponse>(url, getDevicesResponse.class, null, new com.android.volley.Response.Listener<getDevicesResponse>() {
                     @Override
                     public void onResponse(getDevicesResponse response) {
-                        Toast.makeText(Devices.this, "Bien", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Devices.this, "Bien", Toast.LENGTH_LONG).show();
                         devices.clear();
                         devices.addAll(response.getDevices());
                         for(Device dev: devices){
@@ -99,7 +107,7 @@ public class Devices extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     final int position, long id) {
-
+                actualIdDevice = devices.get(position).getId();
                 if (devices.get(position).getType().equals("eu0v2xgprrhhg41g")) {
                     String url = "http://10.0.2.2:8080/api/devices/" + devices.get(position).getId() + "/getState";
                     RequestQueue requestQueue = VolleySingleton.getInstance(context).getRequestQueue();
@@ -129,7 +137,7 @@ public class Devices extends AppCompatActivity {
                             new GsonRequest<GetDoorState>(true, url, GetDoorState.class, null, new com.android.volley.Response.Listener<GetDoorState>() {
                                 @Override
                                 public void onResponse(GetDoorState response) {
-                                    Toast.makeText(Devices.this, response.getResult().getLock(), Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(Devices.this, response.getResult().getLock(), Toast.LENGTH_LONG).show();
                                     UpdateDoor(devices.get(position), response);
                                 }
                             }, new com.android.volley.Response.ErrorListener() {
@@ -292,7 +300,7 @@ public class Devices extends AppCompatActivity {
         title.setText(blinds.getName());
         desc.setText("Description: " + blinds.getMeta());
         final ToggleButton StatusButton = (ToggleButton) findViewById(R.id.BlindsStatus);
-        if(response.getResult().getStatus() == "opened" || response.getResult().getStatus() == "opening"){
+        if(response.getResult().getStatus().equals("opened") || response.getResult().getStatus().equals( "opening")){
             StatusButton.setChecked(true);
         }
         else {
@@ -312,7 +320,7 @@ public class Devices extends AppCompatActivity {
         TextView desc = findViewById(R.id.AcDescription);
         title.setText(ac.getName());
         desc.setText("Description: " + ac.getMeta());
-        Toast.makeText(Devices.this, response.getResult().getFanSpeed(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(Devices.this, response.getResult().getFanSpeed(), Toast.LENGTH_LONG).show();
         ToggleButton StatusButton = (ToggleButton) findViewById(R.id.AcStatus);
 
 
@@ -583,6 +591,568 @@ public class Devices extends AppCompatActivity {
             fridgeMode.setSelection(1);
         else
             fridgeMode.setSelection(2);
+
+    }
+
+    public void acceptBlinds(View view) {
+        String status;
+        String url;
+        final ToggleButton StatusButton = (ToggleButton) findViewById(R.id.BlindsStatus);
+        if (StatusButton.isChecked()) {
+            status = "opened";
+            url = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/up";
+        } else {
+            status = "closed";
+            url = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/down";
+        }
+        BlindsState state = new BlindsState(status);
+        GetBlindsState result = new GetBlindsState(state);
+
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        GsonRequest<ResultStateBoolean> request =
+                new GsonRequest<ResultStateBoolean>(null, url, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
+                    @Override
+                    public void onResponse(ResultStateBoolean response) {
+                        Toast.makeText(Devices.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("dsa", error.toString());
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+        request.setTag("asd");
+        requestQueue.add(request);
+        Intent intent = new Intent(this, Devices.class);
+        startActivity(intent);
+
+    }
+
+    public void acceptDoor(View view) {
+
+        String urlStatus;
+        final ToggleButton StatusButton = (ToggleButton) findViewById(R.id.DoorStatus);
+
+        if (StatusButton.isChecked()) {
+            urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/open";
+        } else {
+            urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/close";
+        }
+
+
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        GsonRequest<ResultStateBoolean> requestStatus =
+                new GsonRequest<ResultStateBoolean>(null, urlStatus, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
+                    @Override
+                    public void onResponse(ResultStateBoolean response) {
+                        lockDoor();
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("dsa", error.toString());
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+        requestStatus.setTag("status");
+        requestQueue.add(requestStatus);
+
+
+    }
+
+    private void lockDoor() {
+        String urlLock;
+        final ToggleButton lockButton = (ToggleButton) findViewById(R.id.LockDoor);
+        if (lockButton.isChecked()) {
+            urlLock = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/lock";
+        } else
+            urlLock = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/unlock";
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        GsonRequest<ResultStateBoolean> requestLock =
+                new GsonRequest<ResultStateBoolean>(null, urlLock, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
+                    @Override
+                    public void onResponse(ResultStateBoolean response) {
+                        Toast.makeText(Devices.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("dsa", error.toString());
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+        requestLock.setTag("lock");
+        requestQueue.add(requestLock);
+        Intent intent = new Intent(this, Devices.class);
+        startActivity(intent);
+    }
+
+    public void acceptFridge(View view){
+        //bla bla
+        changeModeFridge();
+        Intent intent = new Intent(this, Devices.class);
+        startActivity(intent);
+    }
+
+
+    public void changeModeFridge() {
+
+        Spinner modeFridge = (Spinner) findViewById(R.id.FridgeMode);
+        String newMode = modeFridge.getSelectedItem().toString();
+        String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setMode";
+
+
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", newMode);
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        changeTemperatureFridge();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        requestQueue.add(request);
+
+    }
+
+    private void changeTemperatureFridge() {
+        String urlTemperature = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setTemperature";
+        final TextView temperature = (TextView) findViewById(R.id.FridgeTemperature);
+        int temp = Integer.parseInt(temperature.getText().toString());
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", String.valueOf(temp));
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        changeFreezerTemperature();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+        requestQueue.add(request);
+
+    }
+
+    private void changeFreezerTemperature() {
+        String urlTemperature = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setFreezerTemperature";
+        final TextView temperature = (TextView) findViewById(R.id.FreezerTemeprature);
+        int temp = Integer.parseInt(temperature.getText().toString());
+        Map<String, Object> jsonParams1 = new HashMap<>();
+        jsonParams1.put("0", String.valueOf(temp));
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams1),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(Devices.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+        requestQueue.add(request);
+
+    }
+
+    public void acceptOven(View view) {
+        // if bla bla
+        changeOvenStatus();
+        Intent intent = new Intent(this, Devices.class);
+        startActivity(intent);
+    }
+
+    private void changeOvenStatus() {
+        String urlStatus;
+        final ToggleButton statusButton = (ToggleButton) findViewById(R.id.StatusOven);
+        final boolean decide;
+        if (statusButton.isChecked()) {
+            urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOn";
+            decide = true;
+        } else {
+            urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOff";
+            decide = false;
+        }
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        GsonRequest<ResultStateBoolean> request =
+                new GsonRequest<ResultStateBoolean>(null, urlStatus, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
+                    @Override
+                    public void onResponse(ResultStateBoolean response) {
+                        if (decide) {
+                            changeOvenTemperature();
+                        }else{
+                            Toast.makeText(Devices.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("dsa", error.toString());
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+        request.setTag("status");
+        requestQueue.add(request);
+    }
+
+    private void changeOvenTemperature() {
+
+        String urlTemperature = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setTemperature";
+        final TextView temperature = (TextView) findViewById(R.id.TemperatureOven);
+        int temp = Integer.parseInt(temperature.getText().toString());
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", String.valueOf(temp));
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        changeHeatMode();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+        requestQueue.add(request);
+
+    }
+
+    private void changeHeatMode() {
+        Spinner modeFridge = (Spinner) findViewById(R.id.HeatMode);
+        String newMode = modeFridge.getSelectedItem().toString();
+        String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setHeat";
+
+
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", newMode);
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        changeGrillMode();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        requestQueue.add(request);
+    }
+
+    private void changeGrillMode() {
+        Spinner modeFridge = (Spinner) findViewById(R.id.GrillMode);
+        String newMode = modeFridge.getSelectedItem().toString();
+        String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setGrill";
+
+
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", newMode);
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        changeConvectionMode();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        requestQueue.add(request);
+    }
+
+    private void changeConvectionMode(){
+
+        Spinner modeFridge = (Spinner) findViewById(R.id.ConvMode);
+        String newMode = modeFridge.getSelectedItem().toString();
+        String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setConvection";
+
+
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", newMode);
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(Devices.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        requestQueue.add(request);
+
+    }
+
+    public void acceptAc(View view) {
+        // if bla bla
+        changeAcStatus();
+        Intent intent = new Intent(this, Devices.class);
+        startActivity(intent);
+    }
+
+    private void changeAcStatus() {
+        String urlStatus;
+        final ToggleButton statusButton = (ToggleButton) findViewById(R.id.AcStatus);
+        final boolean decide;
+        if (statusButton.isChecked()) {
+            urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOn";
+            decide = true;
+        } else {
+            urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOff";
+            decide = false;
+        }
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        GsonRequest<ResultStateBoolean> request =
+                new GsonRequest<ResultStateBoolean>(null, urlStatus, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
+                    @Override
+                    public void onResponse(ResultStateBoolean response) {
+                        if (decide) {
+                            changeAcTemperature();
+                        }else{
+                            Toast.makeText(Devices.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("dsa", error.toString());
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+        request.setTag("status");
+        requestQueue.add(request);
+    }
+
+    private void changeAcTemperature() {
+
+        String urlTemperature = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setTemperature";
+        final TextView temperature = (TextView) findViewById(R.id.TemperatureAc);
+        int temp = Integer.parseInt(temperature.getText().toString());
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", String.valueOf(temp));
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        changeAcMode();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+        requestQueue.add(request);
+
+    }
+
+    private void changeAcMode() {
+        Spinner modeFridge = (Spinner) findViewById(R.id.ModeAc);
+        String newMode = modeFridge.getSelectedItem().toString();
+        String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setMode";
+
+
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", newMode);
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        changeVerticalSwing();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        requestQueue.add(request);
+    }
+
+    private void changeVerticalSwing() {
+        Spinner modeFridge = (Spinner) findViewById(R.id.VerticalSwing);
+        String newMode = modeFridge.getSelectedItem().toString();
+        String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setVerticalSwing";
+
+
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", newMode);
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        changeHorizontalSwing();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        requestQueue.add(request);
+    }
+
+    private void changeHorizontalSwing(){
+
+        Spinner modeFridge = (Spinner) findViewById(R.id.HorizontalSwing);
+        String newMode = modeFridge.getSelectedItem().toString();
+        String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setHorizontalSwing";
+
+
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", newMode);
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        changeFanSpeed();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        requestQueue.add(request);
+
+    }
+
+    private void changeFanSpeed(){
+
+        Spinner modeFridge = (Spinner) findViewById(R.id.FanSpeed);
+        String newMode = modeFridge.getSelectedItem().toString();
+        String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setFanSpeed";
+
+
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", newMode);
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(Devices.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        requestQueue.add(request);
+
+    }
+
+    public void acceptLamp(View view) {
+        // if bla bla
+        changeLampStatus();
+        Intent intent = new Intent(this, Devices.class);
+        startActivity(intent);
+    }
+
+    private void changeLampStatus() {
+        String urlStatus;
+        final ToggleButton statusButton = (ToggleButton) findViewById(R.id.StatusLamp);
+        final boolean decide;
+        if (statusButton.isChecked()) {
+            urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOn";
+            decide = true;
+        } else {
+            urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOff";
+            decide = false;
+        }
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        GsonRequest<ResultStateBoolean> request =
+                new GsonRequest<ResultStateBoolean>(null, urlStatus, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
+                    @Override
+                    public void onResponse(ResultStateBoolean response) {
+                        if (decide) {
+                            changeBrightness();
+                        }else{
+                            Toast.makeText(Devices.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("dsa", error.toString());
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+        request.setTag("status");
+        requestQueue.add(request);
+    }
+
+    private void changeBrightness() {
+
+        String urlTemperature = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/changeBrightness";
+        final TextView temperature = (TextView) findViewById(R.id.BrightnessLamp);
+        int temp = Integer.parseInt(temperature.getText().toString());
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", String.valueOf(temp));
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(Devices.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Devices.this, "Error to send", Toast.LENGTH_LONG).show();
+                    }
+                });
+        requestQueue.add(request);
 
     }
 
