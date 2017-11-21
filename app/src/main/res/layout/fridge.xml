@@ -127,6 +127,7 @@
         android:id="@+id/FridgeAccept"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:onClick="acceptFridge"
         android:layout_marginBottom="24dp"
         android:layout_marginStart="16dp"
         android:background="@color/colorAccent"
