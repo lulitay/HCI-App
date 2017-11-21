@@ -7,14 +7,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class ImageAdapter extends BaseAdapter {
     private Context context;
-    private final Device[] mobileValues;
+    private final ArrayList<Device> devices;
 
-    public ImageAdapter(Context context, Device[] mobileValues) {
+    public ImageAdapter(Context context, ArrayList<Device> mobileValues) {
         this.context = context;
-        this.mobileValues = mobileValues;
+        this.devices = mobileValues;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -34,21 +36,21 @@ public class ImageAdapter extends BaseAdapter {
             // set value into textview
             TextView textView = (TextView) gridView
                     .findViewById(R.id.grid_item_label);
-            textView.setText(mobileValues[position].getName());
+            textView.setText(devices.get(position).getName());
 
             // set image based on selected text
             ImageView imageView = (ImageView) gridView
                     .findViewById(R.id.grid_item_image);
 
-            String mobile = mobileValues[position].getName();
+            String mobile = devices.get(position).getName();
 
-            switch(mobileValues[position].getType()){
-                case "Fridge": imageView.setImageResource(R.drawable.heladera);break;
-                case "Lamp" : imageView.setImageResource(R.drawable.lamp); break;
-                case "Blinds" : imageView.setImageResource(R.drawable.blinds); break;
-                case "Oven" : imageView.setImageResource(R.drawable.oven); break;
-                case "Ac" : imageView.setImageResource(R.drawable.ac); break;
-                case "Door" : imageView.setImageResource(R.drawable.door); break;
+            switch(devices.get(position).getType()){
+                case "rnizejqr2di0okho": imageView.setImageResource(R.drawable.heladera);break;
+                case "go46xmbqeomjrsjr" : imageView.setImageResource(R.drawable.lamp); break;
+                case "eu0v2xgprrhhg41g" : imageView.setImageResource(R.drawable.blinds); break;
+                case "im77xxyulpegfmv8" : imageView.setImageResource(R.drawable.oven); break;
+                case "li6cbv5sdlatti0j" : imageView.setImageResource(R.drawable.ac); break;
+                case "lsf78ly0eqrjbz91" : imageView.setImageResource(R.drawable.door); break;
                 default:break;
             }
 
@@ -61,7 +63,7 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mobileValues.length;
+        return devices.size();
     }
 
     @Override
