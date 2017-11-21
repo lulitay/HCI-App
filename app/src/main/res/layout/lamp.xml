@@ -92,6 +92,7 @@
         android:layout_marginBottom="24dp"
         android:layout_marginStart="16dp"
         android:background="@color/colorAccent"
+        android:onClick="acceptLamp"
         android:text="Accept"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
