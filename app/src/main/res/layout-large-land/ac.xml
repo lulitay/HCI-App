@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/acTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deviceToolbar" />
+
+    <TextView
+        android:id="@+id/acDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/acTitle" android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="@string/Status"
+        android:textSize="24dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/acStatus"
+        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+
+    <ToggleButton
+        android:id="@+id/acStatus"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:layout_marginRight="24dp"
+        android:text="ToggleButton"
+        android:textOff="Off"
+        android:textOn="On"
+        android:textSize="12sp"
+        app:layout_constraintRight_toLeftOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/acDescription" android:layout_marginEnd="24dp"/>
+
+    <Button
+        android:id="@+id/cancelDoor"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="22dp"
+        android:background="?attr/colorBackgroundFloating"
+        android:text="@string/Cancel"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/acceptDoor"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/acceptDoor"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/colorAccent"
+        android:text="@string/Accept"
+        android:textColor="@android:color/background_light"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/cancelDoor" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Temperature"
+        android:textSize="24dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/temperatureAc"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Mode"
+        android:textSize="24dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/modeAc"
+        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="VerticalSwing"
+        android:textSize="24dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/verticalSwing"
+        app:layout_constraintLeft_toRightOf="@+id/view" android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="HorizontalSwing"
+        android:textSize="24dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/horizontalSwing"
+        app:layout_constraintLeft_toRightOf="@+id/view" android:layout_marginStart="16dp"/>
+
+    <Spinner
+        android:id="@+id/modeAc"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="60dp"
+        android:entries="@array/AcMode"
+        app:layout_constraintRight_toLeftOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" android:layout_marginEnd="24dp"/>
+
+    <EditText
+        android:id="@+id/temperatureAc"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Temperature"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintRight_toLeftOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" android:layout_marginEnd="24dp"/>
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Fan Speed"
+        android:textSize="24dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/fanSpeed"
+        app:layout_constraintLeft_toRightOf="@+id/view" android:layout_marginStart="16dp"/>
+
+    <Spinner
+        android:id="@+id/verticalSwing"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/AcVS"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/acDescription" />
+
+    <Spinner
+        android:id="@+id/horizontalSwing"
+        android:layout_width="120dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="60dp"
+        android:entries="@array/AcHS"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+    <Spinner
+        android:id="@+id/fanSpeed"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="60dp"
+        android:entries="@array/AcFs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/deviceToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="1dp"
+        android:layout_height="288dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/acTitle" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+</android.support.constraint.ConstraintLayout>
