@@ -1,0 +1,122 @@
+<resources>
+    <string name="app_name">Mi primer app</string>
+    <string name="edit_message">Ingrese un mensaje</string>
+    <string name="Home">Inicio</string>
+    <string name="Devices">Dispositivos</string>
+    <string name="Switched">Encendidos</string>
+    <string name="switched_on">ENCENDIDOS</string>
+    <string name="DevicesTitle">Dispositivos</string>
+    <string name="SwitchedOnTitle">Encendidos</string>
+    <string name="button_create">Crear</string>
+    <string name="action_favorite">action_favorite</string>
+    <string name="action_settings">action_settings</string>
+    <string name="Español">Español</string>
+    <string name="English">Ingles</string>
+    <string name="action_notification">action_notification</string>
+    <string name="Status">Estado</string>
+    <string name="Cancel">Cancelar</string>
+    <string name="Accept">Aceptar</string>
+
+    <string-array name="AcMode">
+        <item>Cool</item>
+        <item>Heat</item>
+        <item>Fan</item>
+    </string-array>
+
+    <string-array name="AcVS">
+        <item>Auto</item>
+        <item>22°</item>
+        <item>45°</item>
+        <item>67°</item>
+        <item>90°</item>
+    </string-array>
+
+    <string-array name="AcHS">
+        <item>Auto</item>
+        <item>-90°</item>
+        <item>-45°</item>
+        <item>0°</item>
+        <item>45°</item>
+        <item>90°</item>
+    </string-array>
+
+    <string-array name="AcFs">
+        <item>Auto</item>
+        <item>25</item>
+        <item>50</item>
+        <item>75</item>
+        <item>100</item>
+    </string-array>
+
+    <string-array name="OvenMode">
+        <item>Conventional</item>
+        <item>Bottom</item>
+        <item>Top</item>
+    </string-array>
+
+    <string-array name="OvenGrillMode">
+        <item>Large</item>
+        <item>Eco</item>
+        <item>Off</item>
+    </string-array>
+
+    <string-array name="OvenConvMode">
+        <item>Normal</item>
+        <item>Eco</item>
+        <item>Off</item>
+    </string-array>
+
+    <string-array name="FridgeMode">
+        <item>Default</item>
+        <item>Vacation</item>
+        <item>Party</item>
+    </string-array>
+    <string name="Temperature">Temperatura</string>
+    <string name="Mode">Modo</string>
+    <string name="VerticalSwing">Ala Vertical</string>
+    <string name="HorizontalSwing">Ala Horizontal</string>
+    <string name="FanSpeed">Velocidad Ventilador</string>
+    <string name="LockState">Estado de bloqueo</string>
+    <string name="On">Prendido</string>
+    <string name="Off">Apagado</string>
+    <string name="Open">Abierto</string>
+    <string name="Closed">Cerrado</string>
+    <string name="Locked">Bloqueado</string>
+    <string name="Unlocked">Desbloqueado</string>
+    <string name="FreezerTemp">Freezer Temp</string>
+    <string name="Brightness">Brillo</string>
+    <string name="HeatMode">Modo calentamiento</string>
+    <string name="GrillMode">Modo parrilla</string>
+    <string name="ConvMode">Conveccion</string>
+    <string name="Languaje">Lenguaje</string>
+    <string name="Settings">Configuracion</string>
+    <string name="Description">Descripcion</string>
+    <string name="Notifications">Notificaciones</string>
+    <string name="NotiBlinds">Persianas</string>
+    <string name="NotiBlindsOpen">Las persianas se abrieron</string>
+    <string name="NotiBlindsClosed">Las persianas se cerraron</string>
+    <string name="NotiDoorOpen">La puerta esta abierta</string>
+    <string name="NotiDoorClosed">La puerta esta cerrada</string>
+    <string name="NotiDoorLock">La puerta esta bloqueada</string>
+    <string name="NotiDoorUnlocked">La puerta esta desbloqueada</string>
+    <string name="NotiFridgeTemp">La temperatura fue modificada</string>
+    <string name="NotiFridgeFreezer">La temperatura del freezer fue modificada</string>
+    <string name="NotiFridgeMode">El modo fue modificado</string>
+    <string name="NotiAcStatusOn">El aire acondicionado esta encendido</string>
+    <string name="NotiAcStatusOff">El aire acondicionado esta apagado</string>
+    <string name="NotiAcTemperature">La temperatura fue modificada</string>
+    <string name="NotiAcMode">El modo fue modificado</string>
+    <string name="NotiAcVS">El angulo del ala vertical fue modificado</string>
+    <string name="NotiAcHS">El angulo del ala horizontal fue modificado</string>
+    <string name="NotiAcFS">La velocidad del ventilador fue modificada</string>
+    <string name="NotiOvenOn">El horno esta encendido</string>
+    <string name="NotiOvenOff">El horno esta apagado</string>
+    <string name="NotiOvenTemp">La temperatura fue modificada</string>
+    <string name="NotiOvenHeat">El modo de calentamiento fue modificado</string>
+    <string name="NotiOvenGrill">El modo parrilla fue modificado</string>
+    <string name="NotiOvenConv">El modo de conveccion fue modificado</string>
+    <string name="NotiLampOn">La lampara esta encendida</string>
+    <string name="NotiLampOff">La lampara esta apagada</string>
+    <string name="NotiLampBright">El brillo fue modificado</string>
+
+</resources>
