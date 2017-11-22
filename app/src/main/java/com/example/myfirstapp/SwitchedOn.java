@@ -85,6 +85,18 @@ public class SwitchedOn extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if(item.getItemId() == R.id.Settings){
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public boolean onSupportNavigateUp(){
         Intent intent = new Intent(this, SwitchedOn.class);
         startActivity(intent);
