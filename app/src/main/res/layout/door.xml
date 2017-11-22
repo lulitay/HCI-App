@@ -86,6 +86,7 @@
         android:layout_marginStart="16dp"
         android:background="@color/colorAccent"
         android:text="@string/Accept"
+        android:onClick="acceptDoor"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -26,6 +26,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
                 android:text="@string/Accept"
+                android:onClick="acceptBlinds"
                 android:textColor="@android:color/background_light"
                 android:textSize="20dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/CancelDoor"

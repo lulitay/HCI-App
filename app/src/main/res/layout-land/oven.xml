@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
                 android:text="Accept"
+                android:onClick="acceptOven"
                 android:textColor="@android:color/background_light"
                 android:textSize="20dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/CancelButton"

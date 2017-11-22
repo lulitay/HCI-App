@@ -17,6 +17,7 @@ public class GsonRequest<T> extends Request<T> {
     private final Class<T> clazz;
     private final Map<String, String> headers;
     private final Response.Listener<T> listener;
+    private Object dataIn;
 
     public GsonRequest(String url, Class<T> clazz, Map<String, String> headers,
                        Response.Listener<T> listener, Response.ErrorListener errorListener) {
@@ -24,6 +25,7 @@ public class GsonRequest<T> extends Request<T> {
         this.clazz = clazz;
         this.headers = headers;
         this.listener = listener;
+        dataIn = null;
     }
 
     public GsonRequest(boolean b,String url, Class<T> clazz, Map<String, String> headers,
@@ -32,6 +34,15 @@ public class GsonRequest<T> extends Request<T> {
         this.clazz = clazz;
         this.headers = headers;
         this.listener = listener;
+        dataIn = null;
+    }
+    public GsonRequest(Object dataIn,String url, Class<T> clazz, Map<String, String> headers,
+                       Response.Listener<T> listener, Response.ErrorListener errorListener) {
+        super(Method.PUT, url, errorListener);
+        this.clazz = clazz;
+        this.headers = headers;
+        this.listener = listener;
+        dataIn = dataIn;
     }
 
     @Override
