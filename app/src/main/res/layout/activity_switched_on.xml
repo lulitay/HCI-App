@@ -14,49 +14,66 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-    <Button
-        android:id="@+id/home"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@android:color/background_light"
-        android:onClick="openHome"
-        android:text="@string/Home"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/devices"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:background="@android:color/background_light"
-        android:onClick="openDevices"
-        android:text="@string/Devices"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/home" />
+        <Button
+            android:id="@+id/home"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_selected"
+            android:text="@string/Home"
+            android:onClick="openHome"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/SwitchedOn"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:text="@string/Switched"
-        android:background="@drawable/bottom_selected"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/devices" />
+        <Button
+            android:id="@+id/devices"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"
+            android:background="@android:color/background_light"
+            android:onClick="openDevices"
+            android:text="@string/Devices"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home" />
+
+        <Button
+            android:id="@+id/switchedOn"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"
+            android:background="@android:color/background_light"
+            android:text="@string/Switched"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/devices" />
+
+    </LinearLayout>
 
     <GridView
         android:id="@+id/GridSwitchedOn"
         android:layout_width="356dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="72dp"
         android:columnWidth="100dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

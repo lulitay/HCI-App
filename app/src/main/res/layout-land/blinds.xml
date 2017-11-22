@@ -76,8 +76,8 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="20dp"
                 android:text="ToggleButton"
-                android:textOff="Closed"
-                android:textOn="Open"
+                android:textOff="@string/Closed"
+                android:textOn="@string/Open"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/BlindsDescription" />
 

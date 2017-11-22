@@ -43,37 +43,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="Status"
+        android:text="@string/Status"
         android:textSize="26sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/StatusOven"
-        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="Temperature"
+        android:text="@string/Temperature"
         android:textSize="26sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/TemperatureOven"
-        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="HeatMode"
+        android:text="@string/HeatMode"
         android:textSize="26sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/HeatMode"
-        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="GrillMode"
+        android:text="@string/GrillMode"
         android:textSize="26sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/GrillMode"
         app:layout_constraintStart_toStartOf="parent" />
@@ -83,10 +83,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="ConvMode"
+        android:text="@string/ConvMode"
         android:textSize="26sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/ConvMode"
-        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <ToggleButton
         android:id="@+id/StatusOven"
@@ -95,6 +95,8 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="40dp"
         android:text="ToggleButton"
+        android:textOff="@string/Off"
+        android:textOn="@string/On"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/OvenDescription" />
 
@@ -105,7 +107,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="80dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text="temperature"
         android:textSize="12sp"
         android:textStyle="italic"
@@ -149,7 +151,7 @@
         android:layout_marginBottom="24dp"
         android:layout_marginStart="22dp"
         android:background="@android:color/background_light"
-        android:text="Cancel"
+        android:text="@string/Cancel"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -163,9 +165,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:layout_marginStart="16dp"
-        android:onClick="acceptOven"
         android:background="@color/colorAccent"
-        android:text="Accept"
+        android:onClick="acceptOven"
+        android:text="@string/Accept"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

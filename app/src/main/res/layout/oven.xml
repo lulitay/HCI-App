@@ -45,10 +45,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp"
-        android:text="Status"
+        android:text="@string/Status"
         android:textSize="26sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/OvenDescription" android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/OvenDescription" />
 
     <TextView
         android:id="@+id/textView13"
@@ -56,10 +56,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="26dp"
-        android:text="Temperature"
+        android:text="@string/Temperature"
         android:textSize="26sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
         android:id="@+id/textView14"
@@ -67,10 +67,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="26dp"
-        android:text="HeatMode"
+        android:text="@string/HeatMode"
         android:textSize="26sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <TextView
         android:id="@+id/textView15"
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="26dp"
-        android:text="GrillMode"
+        android:text="@string/GrillMode"
         android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
@@ -89,10 +89,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="26dp"
-        android:text="ConvMode"
+        android:text="@string/ConvMode"
         android:textSize="26sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <ToggleButton
         android:id="@+id/StatusOven"
@@ -101,6 +101,8 @@
         android:layout_marginBottom="320dp"
         android:layout_marginEnd="24dp"
         android:text="ToggleButton"
+        android:textOff="@string/Off"
+        android:textOn="@string/On"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -111,7 +113,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="22dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text="temperature"
         android:textSize="12sp"
         android:textStyle="italic"
@@ -155,7 +157,7 @@
         android:layout_marginBottom="24dp"
         android:layout_marginStart="22dp"
         android:background="@android:color/background_light"
-        android:text="Cancel"
+        android:text="@string/Cancel"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -168,8 +170,8 @@
         android:layout_marginBottom="24dp"
         android:layout_marginStart="16dp"
         android:background="@color/colorAccent"
-        android:text="Accept"
         android:onClick="acceptOven"
+        android:text="@string/Accept"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

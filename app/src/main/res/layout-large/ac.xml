@@ -56,8 +56,8 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="8dp"
         android:text="ToggleButton"
-        android:textOff="Off"
-        android:textOn="On"
+        android:textOff="@string/Off"
+        android:textOn="@string/On"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AcDescription" />
@@ -98,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Temperature"
+        android:text="@string/Temperature"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/TemperatureAc"
         app:layout_constraintStart_toStartOf="parent" />
@@ -108,30 +108,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="Mode"
+        android:text="@string/Mode"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/ModeAc"
-        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="VerticalSwing"
+        android:text="@string/VerticalSwing"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/VerticalSwing"
-        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="HorizontalSwing"
+        android:text="@string/HorizontalSwing"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/HorizontalSwing"
-        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Spinner
         android:id="@+id/ModeAc"
@@ -150,7 +150,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="80dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text="Temperature"
         android:textSize="12sp"
         android:textStyle="italic"
@@ -162,10 +162,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="Fan Speed"
+        android:text="@string/FanSpeed"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/FanSpeed"
-        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Spinner
         android:id="@+id/VerticalSwing"

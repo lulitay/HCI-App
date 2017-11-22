@@ -45,10 +45,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:text="Temperature"
+        android:text="@string/Temperature"
         android:textSize="25sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FridgeDesc" android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/FridgeDesc" />
 
     <TextView
         android:id="@+id/textView20"
@@ -56,10 +56,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:text="Freezer Temp"
+        android:text="@string/FreezerTemp"
         android:textSize="25sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19" android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     <TextView
         android:id="@+id/textView21"
@@ -67,10 +67,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:text="Mode"
+        android:text="@string/Mode"
         android:textSize="25sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <EditText
         android:id="@+id/FridgeTemperature"
@@ -79,7 +79,7 @@
         android:layout_marginBottom="305dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text="Temperature"
         android:textSize="16sp"
         android:textStyle="italic"
@@ -93,7 +93,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text="Temperature"
         android:textSize="16sp"
         android:textStyle="italic"
@@ -117,7 +117,7 @@
         android:layout_marginBottom="24dp"
         android:layout_marginStart="22dp"
         android:background="@android:color/background_light"
-        android:text="Cancel"
+        android:text="@string/Cancel"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -127,11 +127,11 @@
         android:id="@+id/FridgeAccept"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:onClick="acceptFridge"
         android:layout_marginBottom="24dp"
         android:layout_marginStart="16dp"
         android:background="@color/colorAccent"
-        android:text="Accept"
+        android:onClick="acceptFridge"
+        android:text="@string/Accept"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

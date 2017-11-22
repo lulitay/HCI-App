@@ -1,6 +1,7 @@
 package com.example.myfirstapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import com.android.volley.*;
 
 public class NotificationsActivity extends AppCompatActivity {
-
+    public static final String PREFS_NAME = "MyPrefsFile";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +111,7 @@ public class NotificationsActivity extends AppCompatActivity {
                 viewHolder.s = (Switch) convertView
                         .findViewById(R.id.simpleSwitch);
                 convertView.setTag(viewHolder);
+
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
@@ -119,18 +121,35 @@ public class NotificationsActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked){
                         devices.get(position).setNotState(true);
-                        Toast.makeText(NotificationsActivity.this, "not a true", Toast.LENGTH_LONG).show();
+                        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putBoolean(devices.get(position).getId(), true);
+                        editor.commit();
+
                     }
                     else {
                         devices.get(position).setNotState(false);
-                        Toast.makeText(NotificationsActivity.this, "not a false", Toast.LENGTH_LONG).show();
+                        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putBoolean(devices.get(position).getId(), false);
+                        editor.commit();
                     }
                 }
             });
 
-
+            setPreference(viewHolder.s,position,devices);
             return convertView;
         }
+
+    }
+
+    public void setPreference(Switch s, int position, ArrayList<Device> devices){
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        boolean silent = settings.getBoolean(devices.get(position).getId(), false);
+        s.setChecked(silent);
+        //if(silent)
+        //Toast.makeText(NotificationsActivity.this, devices.get(position).getName(), Toast.LENGTH_LONG).show();
+
 
     }
 

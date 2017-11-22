@@ -56,8 +56,8 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="100dp"
         android:text="ToggleButton"
-        android:textOff="Closed"
-        android:textOn="Open"
+        android:textOff="@string/Closed"
+        android:textOn="@string/Open"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DoorDescription" />
 
@@ -97,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Lock State"
+        android:text="@string/LockState"
         android:textSize="36sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/LockDoor"
         app:layout_constraintStart_toStartOf="parent" />
@@ -110,8 +110,8 @@
         android:layout_marginTop="100dp"
         android:checked="false"
         android:text="ToggleButton"
-        android:textOff="Unlocked"
-        android:textOn="Locked"
+        android:textOff="@string/Unlocked"
+        android:textOn="@string/Locked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 

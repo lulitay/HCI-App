@@ -21,10 +21,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.DeviceToolbar);
         setSupportActionBar(myToolbar);
-        setTitle("Settings");
+        setTitle( getString(R.string.Settings));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String data [] = {"Language", "Notifications"};
+        String data [] = {getString(R.string.Languaje), getString(R.string.Notifications)};
 
         ListView listView;
 

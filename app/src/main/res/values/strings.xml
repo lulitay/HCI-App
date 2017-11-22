@@ -71,6 +71,7 @@
         <item>Vacation</item>
         <item>Party</item>
     </string-array>
+
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -144,5 +145,54 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+
+    <string name="Temperature">Temperature</string>
+    <string name="Mode">Mode</string>
+    <string name="VerticalSwing">VerticalSwing</string>
+    <string name="HorizontalSwing">HorizontalSwing</string>
+    <string name="FanSpeed">Fan Speed</string>
+    <string name="LockState">Lock State</string>
+    <string name="On">On</string>
+    <string name="Off">Off</string>
+    <string name="Open">Open</string>
+    <string name="Closed">Closed</string>
+    <string name="Locked">Locked</string>
+    <string name="Unlocked">Unlocked</string>
+    <string name="FreezerTemp">Freezer Temp</string>
+    <string name="Brightness">Brightness</string>
+    <string name="HeatMode">HeatMode</string>
+    <string name="GrillMode">GrillMode</string>
+    <string name="ConvMode">ConvMode</string>
+    <string name="Languaje">Language</string>
+    <string name="Settings">Settings</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Description">Description</string>
+    <string name="NotiBlinds">Blinds</string>
+    <string name="NotiBlindsOpen">The blinds are open</string>
+    <string name="NotiBlindsClosed">The blinds are closed</string>
+    <string name="NotiDoorOpen">The door is open</string>
+    <string name="NotiDoorClosed">The door is closed</string>
+    <string name="NotiDoorLock">The door is locked</string>
+    <string name="NotiDoorUnlocked">The door is unlocked</string>
+    <string name="NotiFridgeTemp">The temperature has been changed</string>
+    <string name="NotiFridgeFreezer">The freezer temperature has been changed</string>
+    <string name="NotiFridgeMode">The fridge mode has been changed</string>
+    <string name="NotiAcStatusOn">The Ac is on</string>
+    <string name="NotiAcStatusOff">The Ac is off</string>
+    <string name="NotiAcMode">The mode has been changed</string>
+    <string name="NotiAcTemperature">The temperature has been changed</string>
+    <string name="NotiAcVS">The angle of vertical swing has been changed</string>
+    <string name="NotiAcHS">The angle of horizontal swing has been changed</string>
+    <string name="NotiAcFS">The fan speed has been changed</string>
+    <string name="NotiOvenOn">The oven is on</string>
+    <string name="NotiOvenOff">The oven is off</string>
+    <string name="NotiOvenTemp">The temperature has been changed</string>
+    <string name="NotiOvenHeat">The heat mode has been changed</string>
+    <string name="NotiOvenGrill">The grill mode has been changed</string>
+    <string name="NotiOvenConv">The convection mode has been changed</string>
+    <string name="NotiLampOn">The lamp is on</string>
+    <string name="NotiLampOff">The lamp is off</string>
+    <string name="NotiLampBright">The brightness has been changed</string>
 
 </resources>

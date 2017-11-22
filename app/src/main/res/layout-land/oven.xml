@@ -35,8 +35,8 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
-                android:text="Accept"
                 android:onClick="acceptOven"
+                android:text="@string/Accept"
                 android:textColor="@android:color/background_light"
                 android:textSize="20dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/CancelButton"
@@ -51,7 +51,7 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:text="temperature"
                 android:textSize="12sp"
                 android:textStyle="italic"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="Status"
+                android:text="@string/Status"
                 android:textSize="26dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/StatusOven"
                 app:layout_constraintLeft_toLeftOf="parent" />
@@ -85,6 +85,8 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginTop="8dp"
                 android:text="ToggleButton"
+                android:textOff="@string/Off"
+                android:textOn="@string/On"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/OvenDescription" />
 
@@ -93,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="HeatMode"
+                android:text="@string/HeatMode"
                 android:textSize="26dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/HeatMode"
                 app:layout_constraintLeft_toLeftOf="parent" />
@@ -103,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="GrillMode"
+                android:text="@string/GrillMode"
                 android:textSize="26dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/GrillMode"
                 app:layout_constraintLeft_toLeftOf="parent" />
@@ -123,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="ConvMode"
+                android:text="@string/ConvMode"
                 android:textSize="26dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/ConvMode"
                 app:layout_constraintLeft_toLeftOf="parent" />
@@ -134,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@android:color/background_light"
-                android:text="Cancel"
+                android:text="@string/Cancel"
                 android:textColor="@color/colorAccent"
                 android:textSize="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/AcceptOven"
@@ -168,7 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="Temperature"
+                android:text="@string/Temperature"
                 android:textSize="26dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/TemperatureOven"
                 app:layout_constraintLeft_toLeftOf="parent" />

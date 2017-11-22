@@ -7,6 +7,7 @@ import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
 
 /**
  * Created by catalinavarela on 19/11/17.
@@ -36,14 +37,17 @@ public class Notifications extends ContextWrapper{
     public void build(){
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.smart_house_logo);
 
-        notification = new Notification.Builder(this)
+        notification = new NotificationCompat.Builder(this)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setLargeIcon(largeIcon)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(message))
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setVisibility (Notification.VISIBILITY_PRIVATE)
                 .build();
+
     }
 
     public void addToLodge(){

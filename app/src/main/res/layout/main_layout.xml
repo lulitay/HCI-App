@@ -16,7 +16,7 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="107dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
@@ -74,37 +74,53 @@
             android:orientation="horizontal" />
     </HorizontalScrollView>
 
-    <Button
-        android:id="@+id/home"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@drawable/bottom_selected"
-        android:text="@string/Home"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/devices"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:background="@android:color/background_light"
-        android:onClick="openDevices"
-        android:text="@string/Devices"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/home" />
+        <Button
+            android:id="@+id/home"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_selected"
+            android:text="@string/Home"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/switchedOn"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:background="@android:color/background_light"
-        android:onClick="openSwitchedOn"
-        android:text="@string/Switched"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/devices" />
+        <Button
+            android:id="@+id/devices"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"
+            android:background="@android:color/background_light"
+            android:onClick="openDevices"
+            android:text="@string/Devices"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home" />
+
+        <Button
+            android:id="@+id/switchedOn"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"
+            android:background="@android:color/background_light"
+            android:onClick="openSwitchedOn"
+            android:text="@string/Switched"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/devices" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

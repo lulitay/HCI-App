@@ -1,10 +1,16 @@
 package com.example.myfirstapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,22 +33,37 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     String actualIdDevice;
+    Device actualDevice;
+    LastState lastState = new LastState();
+    public static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        boolean silent = settings.getBoolean("silentMode", false);
+        String language;
+        if(silent)
+            language = "en";
+        else
+            language = "es";
+        Locale myLocale = new Locale(language);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout); //con esto el decimos cual es el layout grafico, osea donde estan las ID's
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.DeviceToolbar);
         setSupportActionBar(myToolbar);
-
         //createTabHost(savedInstanceState);
-
-        setTitle("Home");
+        setTitle( getString(R.string.Home));
 
 
         Log.d("asd", "whut");
@@ -62,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         updateDevices(devices);
                         UpdateOnDevices(devices);
+                        notificationsDevices(devices);
                     }
                 }, new com.android.volley.Response.ErrorListener() {
                     @Override
@@ -75,7 +97,26 @@ public class MainActivity extends AppCompatActivity {
 
         //Toast.makeText(MainActivity.this, "Finalizado", Toast.LENGTH_LONG).show();
 
+    }
 
+    private void notificationsDevices(ArrayList<Device> devices){
+        for(Device dev: devices){
+            SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+            boolean silent = settings.getBoolean(dev.getId(), false);
+            dev.setNotState(silent);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if(item.getItemId() == R.id.Settings){
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void updateDevices(final ArrayList<Device> devices) {
@@ -210,18 +251,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        if(item.getItemId() == R.id.Settings){
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void openDevices(View view) {
         Intent intent = new Intent(this, Devices.class);
         startActivity(intent);
@@ -281,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startLayout(final ArrayList<Device> devices, final int position) {
         actualIdDevice = devices.get(position).getId();
+        actualDevice = devices.get(position);
         if (devices.get(position).getType().equals("eu0v2xgprrhhg41g")) {
             String url = "http://10.0.2.2:8080/api/devices/" + devices.get(position).getId() + "/getState";
             RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
@@ -432,19 +462,25 @@ public class MainActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.DoorTitle);
         TextView desc = findViewById(R.id.DoorDescription);
         title.setText(door.getName());
-        desc.setText("Description: " + door.getMeta());
+        desc.setText(getString(R.string.Description) + ": "+ door.getMeta());
 
         ToggleButton StatusButton = (ToggleButton) findViewById(R.id.DoorStatus);
         final ToggleButton LockButton = (ToggleButton) findViewById(R.id.LockDoor);
 
         if (response.getResult().getStatus().equals("closed")) {
             StatusButton.setChecked(false);
-            if (response.getResult().getLock().equals("unlocked"))
+            lastState.setStatus(false);
+            if (response.getResult().getLock().equals("unlocked")) {
                 LockButton.setChecked(false);
-            else
+                lastState.setLock(false);
+            }
+            else {
                 LockButton.setChecked(true);
+                lastState.setLock(true);
+            }
         } else {
             StatusButton.setChecked(true);
+            lastState.setStatus(true);
             LockButton.setChecked(false);
             LockButton.setEnabled(false);
         }
@@ -474,13 +510,15 @@ public class MainActivity extends AppCompatActivity {
         TextView desc = findViewById(R.id.BlindsDescription);
 
         title.setText(blinds.getName());
-        desc.setText("Description: " + blinds.getMeta());
+        desc.setText(getString(R.string.Description) + ": "+ blinds.getMeta());
         // Toast.makeText(MainActivity.this, response.getResult().getStatus(), Toast.LENGTH_LONG).show();
         final ToggleButton StatusButton = (ToggleButton) findViewById(R.id.BlindsStatus);
         if (response.getResult().getStatus().equals("opened") || response.getResult().getStatus().equals("opening")) {
             StatusButton.setChecked(true);
+            lastState.setStatus(true);
         } else {
             StatusButton.setChecked(false);
+            lastState.setStatus(false);
         }
 
 
@@ -495,22 +533,27 @@ public class MainActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.AcTitle);
         TextView desc = findViewById(R.id.AcDescription);
         title.setText(ac.getName());
-        desc.setText("Description: " + ac.getMeta());
+        desc.setText(getString(R.string.Description) + ": " + ac.getMeta());
         //Toast.makeText(MainActivity.this, response.getResult().getFanSpeed(), Toast.LENGTH_LONG).show();
         ToggleButton StatusButton = (ToggleButton) findViewById(R.id.AcStatus);
 
 
         if (response.getResult().getStatus().equals("on")) {
             StatusButton.setChecked(true);
-        } else
+            lastState.setStatus(true);
+        } else {
             StatusButton.setChecked(false);
+            lastState.setStatus(false);
+        }
 
         final TextView temperature = (TextView) findViewById(R.id.TemperatureAc);
         temperature.setText(String.valueOf(response.getResult().getTemperature()));
+        lastState.setTemperature(response.getResult().getTemperature());
         final int lastTemperatureInt = response.getResult().getTemperature();
         final String lastTemprature = String.valueOf(lastTemperatureInt);
 
         final Spinner modeAc = (Spinner) findViewById(R.id.ModeAc);
+        lastState.setFirstSpinner(response.getResult().getMode());
         if (response.getResult().getMode().equals("Cool"))
             modeAc.setSelection(0);
         else if (response.getResult().getMode().equals("Heat"))
@@ -518,7 +561,7 @@ public class MainActivity extends AppCompatActivity {
         else
             modeAc.setSelection(2);
         final int lastMode = modeAc.getSelectedItemPosition();
-
+        lastState.setSecondSpinner(response.getResult().getVerticalSwing());
         final Spinner vertSwing = (Spinner) findViewById(R.id.VerticalSwing);
         if (response.getResult().getVerticalSwing().equals("Auto"))
             vertSwing.setSelection(0);
@@ -533,6 +576,7 @@ public class MainActivity extends AppCompatActivity {
         final int lastVS = vertSwing.getSelectedItemPosition();
 
         final Spinner horSwing = (Spinner) findViewById(R.id.HorizontalSwing);
+        lastState.setThirdSpinner(response.getResult().getHorizontalSwing());
         if (response.getResult().getHorizontalSwing().equals("Auto"))
             horSwing.setSelection(0);
         else if (response.getResult().getHorizontalSwing().equals("-90°"))
@@ -548,6 +592,7 @@ public class MainActivity extends AppCompatActivity {
         final int lastHS = horSwing.getSelectedItemPosition();
 
         final Spinner fanSpeed = (Spinner) findViewById(R.id.FanSpeed);
+        lastState.setForthSpinner(response.getResult().getFanSpeed());
         if (response.getResult().getFanSpeed().equals("Auto"))
             fanSpeed.setSelection(0);
         else if (response.getResult().getFanSpeed().equals("25"))
@@ -612,20 +657,25 @@ public class MainActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.OvenTitle);
         TextView desc = findViewById(R.id.OvenDescription);
         title.setText(oven.getName());
-        desc.setText("Description: " + oven.getMeta());
+        desc.setText(getString(R.string.Description) + ": " + oven.getMeta());
 
         ToggleButton StatusButton = (ToggleButton) findViewById(R.id.StatusOven);
         if (response.getResult().getStatus().equals("on")) {
             StatusButton.setChecked(true);
-        } else
+            lastState.setStatus(true);
+        } else {
             StatusButton.setChecked(false);
+            lastState.setStatus(false);
+        }
 
         final TextView temperature = (TextView) findViewById(R.id.TemperatureOven);
         temperature.setText(String.valueOf(response.getResult().getTemperature()));
         final int lastTemperatureInt = response.getResult().getTemperature();
+        lastState.setTemperature(lastTemperatureInt);
         final String lastTemprature = String.valueOf(lastTemperatureInt);
 
         final Spinner heatMode = (Spinner) findViewById(R.id.HeatMode);
+        lastState.setFirstSpinner(response.getResult().getHeat());
         if (response.getResult().getHeat().equals("Conventional"))
             heatMode.setSelection(0);
         else if (response.getResult().getHeat().equals("Bottom"))
@@ -635,6 +685,7 @@ public class MainActivity extends AppCompatActivity {
         final int lastHeatMode = heatMode.getSelectedItemPosition();
 
         final Spinner grillMode = (Spinner) findViewById(R.id.GrillMode);
+        lastState.setSecondSpinner(response.getResult().getGrill());
         if (response.getResult().getGrill().equals("Large"))
             grillMode.setSelection(0);
         else if (response.getResult().getGrill().equals("Eco"))
@@ -644,6 +695,7 @@ public class MainActivity extends AppCompatActivity {
         final int lastGrillMode = grillMode.getSelectedItemPosition();
 
         final Spinner convMode = (Spinner) findViewById(R.id.ConvMode);
+        lastState.setThirdSpinner(response.getResult().getConvection());
         if (response.getResult().getConvection().equals("Normal"))
             convMode.setSelection(0);
         else if (response.getResult().getConvection().equals("Eco"))
@@ -694,7 +746,7 @@ public class MainActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.LampTitle);
         TextView desc = findViewById(R.id.LampDescription);
         title.setText(lamp.getName());
-        desc.setText("Description: " + lamp.getMeta());
+        desc.setText(getString(R.string.Description) + ": " + lamp.getMeta());
 
 
         ToggleButton StatusButton = (ToggleButton) findViewById(R.id.StatusLamp);
@@ -703,14 +755,16 @@ public class MainActivity extends AppCompatActivity {
         final TextView brightness = (TextView) findViewById(R.id.BrightnessLamp);
         final String lastBrightness = String.valueOf(response.getResult().getBrightness());
         brightness.setText(lastBrightness);
-
+        lastState.setBrightness(response.getResult().getBrightness());
 
         if (response.getResult().getStatus().equals("on")) {
             StatusButton.setChecked(true);
             brightness.setEnabled(true);
+            lastState.setStatus(true);
         } else {
             StatusButton.setChecked(false);
             brightness.setEnabled(false);
+            lastState.setStatus(false);
 
         }
         StatusButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -737,13 +791,16 @@ public class MainActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.FridgeTitle);
         TextView desc = findViewById(R.id.FridgeDesc);
         title.setText(fridge.getName());
-        desc.setText("Description: " + fridge.getMeta());
+        desc.setText(getString(R.string.Description) + ": " + fridge.getMeta());
 
         final TextView temperature = (TextView) findViewById(R.id.FridgeTemperature);
         temperature.setText(String.valueOf(response.getResult().getTemperature()));
         final TextView freezerTemperature = (TextView) findViewById(R.id.FreezerTemeprature);
         freezerTemperature.setText(String.valueOf(response.getResult().getFreezerTemperature()));
         final Spinner fridgeMode = (Spinner) findViewById(R.id.FridgeMode);
+        lastState.setTemperature(response.getResult().getTemperature());
+        lastState.setFreezertemperatureTemperature(response.getResult().getFreezerTemperature());
+        lastState.setFirstSpinner(response.getResult().getMode());
         if (response.getResult().getMode().equals("Default"))
             fridgeMode.setSelection(0);
         else if (response.getResult().getMode().equals("Vacation"))
@@ -754,25 +811,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void acceptBlinds(View view) {
-        String status;
+        final boolean changed;
+        boolean status;
         String url;
+
         final ToggleButton StatusButton = (ToggleButton) findViewById(R.id.BlindsStatus);
         if (StatusButton.isChecked()) {
-            status = "opened";
+            status = true;
             url = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/up";
         } else {
-            status = "closed";
+            status = false;
             url = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/down";
         }
-        BlindsState state = new BlindsState(status);
-        GetBlindsState result = new GetBlindsState(state);
+
+        if( status != lastState.getStatus())
+            changed = true;
+        else
+            changed = false;
 
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         GsonRequest<ResultStateBoolean> request =
                 new GsonRequest<ResultStateBoolean>(null, url, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
                     @Override
                     public void onResponse(ResultStateBoolean response) {
-                        Toast.makeText(MainActivity.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                        if(actualDevice.getNotState() && changed){
+                            if(StatusButton.isChecked()) {
+                                Notifications noti = new Notifications(getString(R.string.NotiBlindsOpen),actualDevice.getName() , MainActivity.this);
+                                noti.build();
+                                noti.addToLodge();
+                            }else{
+                                Notifications noti = new Notifications(getString(R.string.NotiBlindsClosed),actualDevice.getName() , MainActivity.this);
+                                noti.build();
+                                noti.addToLodge();
+                            }
+                        }
+
                     }
                 }, new com.android.volley.Response.ErrorListener() {
                     @Override
@@ -789,23 +862,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void acceptDoor(View view) {
-
+        String changes = "";
         String urlStatus;
+        boolean status;
         final ToggleButton StatusButton = (ToggleButton) findViewById(R.id.DoorStatus);
 
         if (StatusButton.isChecked()) {
             urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/open";
+            status = true;
+            if(status != lastState.getStatus())
+                changes += getString(R.string.NotiDoorOpen) +"\n";
         } else {
             urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/close";
+            status = false;
+            if(status != lastState.getStatus())
+                changes += getString(R.string.NotiDoorClosed) + "\n";
         }
 
 
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         GsonRequest<ResultStateBoolean> requestStatus =
                 new GsonRequest<ResultStateBoolean>(null, urlStatus, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
                     @Override
                     public void onResponse(ResultStateBoolean response) {
-                        lockDoor();
+                        lockDoor(finalChanges);
                     }
                 }, new com.android.volley.Response.ErrorListener() {
                     @Override
@@ -820,19 +901,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void lockDoor() {
+    private void lockDoor(String changes) {
         String urlLock;
+        boolean lock;
         final ToggleButton lockButton = (ToggleButton) findViewById(R.id.LockDoor);
         if (lockButton.isChecked()) {
             urlLock = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/lock";
-        } else
+            lock = true;
+            if(lock != lastState.getLock())
+                changes += getString(R.string.NotiDoorLock);
+        } else {
             urlLock = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/unlock";
+            lock = false;
+            if(lock != lastState.getLock())
+                changes += getString(R.string.NotiDoorUnlocked);
+        }
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         GsonRequest<ResultStateBoolean> requestLock =
                 new GsonRequest<ResultStateBoolean>(null, urlLock, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
                     @Override
                     public void onResponse(ResultStateBoolean response) {
-                        Toast.makeText(MainActivity.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                        if(actualDevice.getNotState() && finalChanges.length() > 0) {
+                            Notifications noti = new Notifications(finalChanges, actualDevice.getName(), MainActivity.this);
+                            noti.build();
+                            noti.addToLodge();
+                        }
                     }
                 }, new com.android.volley.Response.ErrorListener() {
                     @Override
@@ -848,28 +942,75 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void acceptFridge(View view){
-        //bla bla
-        changeModeFridge();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        final TextView temperature = (TextView) findViewById(R.id.FridgeTemperature);
+        int temp = Integer.parseInt(temperature.getText().toString());
+        final TextView temperatureFreezer = (TextView) findViewById(R.id.FreezerTemeprature);
+        int tempFreezer = Integer.parseInt(temperatureFreezer.getText().toString());
+        if( (tempFreezer < -20 || tempFreezer > -8) && (temp > 8 || temp < 2)){
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Fridge: Freezer Temperature must be between -20 and -8 \n\n" +
+            "Fridge: Temperature must be between 2 and 8");
+            dlgAlert.setTitle("Information");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.setCancelable(true);
+            dlgAlert.create().show();
+        }
+        else if(temp > 8 || temp < 2){
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Fridge: Temperature must be between 2 and 8");
+            dlgAlert.setTitle("Information");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.setCancelable(true);
+            dlgAlert.create().show();
+        }
+        else if(tempFreezer < -20 || tempFreezer > -8){
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Fridge: Freezer temperature must be between -20 and -8");
+            dlgAlert.setTitle("Information");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.setCancelable(true);
+            dlgAlert.create().show();
+
+        } else{
+            changeModeFridge();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
 
     public void changeModeFridge() {
-
+        String changes = "";
         Spinner modeFridge = (Spinner) findViewById(R.id.FridgeMode);
         String newMode = modeFridge.getSelectedItem().toString();
         String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setMode";
-
+        if(! lastState.getFirstSpinner().equals(newMode))
+            changes += getString(R.string.NotiFridgeMode) + "\n";
 
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", newMode);
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        changeTemperatureFridge();
+                        changeTemperatureFridge(finalChanges);
                     }
                 },
                 new Response.ErrorListener() {
@@ -883,18 +1024,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void changeTemperatureFridge() {
+    private void changeTemperatureFridge(String changes) {
         String urlTemperature = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setTemperature";
         final TextView temperature = (TextView) findViewById(R.id.FridgeTemperature);
         int temp = Integer.parseInt(temperature.getText().toString());
+
+        if(lastState.getTemperature() != temp)
+            changes += getString(R.string.NotiFridgeTemp) + "\n";
+
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", String.valueOf(temp));
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        changeFreezerTemperature();
+                        changeFreezerTemperature(finalChanges);
                     }
                 },
                 new Response.ErrorListener() {
@@ -907,18 +1053,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void changeFreezerTemperature() {
+    private void changeFreezerTemperature(String changes) {
         String urlTemperature = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setFreezerTemperature";
         final TextView temperature = (TextView) findViewById(R.id.FreezerTemeprature);
         int temp = Integer.parseInt(temperature.getText().toString());
+
+        if(lastState.getFreezertemperature() != temp)
+            changes += getString(R.string.NotiFridgeFreezer);
         Map<String, Object> jsonParams1 = new HashMap<>();
         jsonParams1.put("0", String.valueOf(temp));
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams1),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(MainActivity.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                        if(actualDevice.getNotState() && finalChanges.length() > 0) {
+                            Notifications noti = new Notifications(finalChanges, actualDevice.getName(), MainActivity.this);
+                            noti.build();
+                            noti.addToLodge();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -932,32 +1086,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void acceptOven(View view) {
-        // if bla bla
-        changeOvenStatus();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        final TextView temperature = (TextView) findViewById(R.id.TemperatureOven);
+        int temp = Integer.parseInt(temperature.getText().toString());
+        if(temp > 230 || temp < 90){
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Oven: Temperature must be between 90 and 230");
+            dlgAlert.setTitle("Information");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.setCancelable(true);
+            dlgAlert.create().show();
+        } else {
+            changeOvenStatus();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void changeOvenStatus() {
         String urlStatus;
+        String changes = "";
         final ToggleButton statusButton = (ToggleButton) findViewById(R.id.StatusOven);
         final boolean decide;
         if (statusButton.isChecked()) {
             urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOn";
             decide = true;
+            if(decide != lastState.getStatus()){
+                changes += getString(R.string.NotiOvenOn) + "\n";
+            }
         } else {
             urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOff";
             decide = false;
+            if(decide != lastState.getStatus()){
+                changes += getString(R.string.NotiOvenOff) + "\n";
+            }
         }
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         GsonRequest<ResultStateBoolean> request =
                 new GsonRequest<ResultStateBoolean>(null, urlStatus, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
                     @Override
                     public void onResponse(ResultStateBoolean response) {
                         if (decide) {
-                            changeOvenTemperature();
-                        }else{
-                            Toast.makeText(MainActivity.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                            changeOvenTemperature(finalChanges);
+                        }else if(actualDevice.getNotState() && finalChanges.length() > 0){
+                            Notifications noti = new Notifications(finalChanges, actualDevice.getName(), MainActivity.this);
+                            noti.build();
+                            noti.addToLodge();
                         }
 
                     }
@@ -972,19 +1151,24 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void changeOvenTemperature() {
+    private void changeOvenTemperature(String changes) {
 
         String urlTemperature = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setTemperature";
         final TextView temperature = (TextView) findViewById(R.id.TemperatureOven);
         int temp = Integer.parseInt(temperature.getText().toString());
+
+        if(lastState.getTemperature() != temp)
+            changes += getString(R.string.NotiOvenTemp) + "\n";
+
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", String.valueOf(temp));
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        changeHeatMode();
+                        changeHeatMode(finalChanges);
                     }
                 },
                 new Response.ErrorListener() {
@@ -997,20 +1181,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void changeHeatMode() {
+    private void changeHeatMode(String changes) {
         Spinner modeFridge = (Spinner) findViewById(R.id.HeatMode);
         String newMode = modeFridge.getSelectedItem().toString();
         String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setHeat";
 
-
+        if(! lastState.getFirstSpinner().equals(newMode))
+            changes += getString(R.string.NotiOvenHeat) + "\n";
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", newMode);
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        changeGrillMode();
+                        changeGrillMode(finalChanges);
                     }
                 },
                 new Response.ErrorListener() {
@@ -1023,20 +1209,22 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void changeGrillMode() {
+    private void changeGrillMode(String changes) {
         Spinner modeFridge = (Spinner) findViewById(R.id.GrillMode);
         String newMode = modeFridge.getSelectedItem().toString();
         String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setGrill";
-
+        if(! lastState.getSecondSpinner().equals(newMode))
+            changes += getString(R.string.NotiOvenGrill) + "\n";
 
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", newMode);
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        changeConvectionMode();
+                        changeConvectionMode(finalChanges);
                     }
                 },
                 new Response.ErrorListener() {
@@ -1049,21 +1237,28 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void changeConvectionMode(){
+    private void changeConvectionMode(String changes){
 
         Spinner modeFridge = (Spinner) findViewById(R.id.ConvMode);
         String newMode = modeFridge.getSelectedItem().toString();
         String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setConvection";
+        if(! lastState.getThirdSpinner().equals(newMode))
+            changes += getString(R.string.NotiOvenConv);
 
 
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", newMode);
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(MainActivity.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                    if(actualDevice.getNotState() && finalChanges.length() > 0){
+                        Notifications noti = new Notifications(finalChanges, actualDevice.getName(), MainActivity.this);
+                        noti.build();
+                        noti.addToLodge();
+                    }
                     }
                 },
                 new Response.ErrorListener() {
@@ -1078,32 +1273,55 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void acceptAc(View view) {
-        // if bla bla
-        changeAcStatus();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        final TextView temperature = (TextView) findViewById(R.id.TemperatureAc);
+        int temp = Integer.parseInt(temperature.getText().toString());
+        if(temp > 38 || temp < 18){
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Ac: Temperature must be between 18 and 38");
+            dlgAlert.setTitle("Information");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.setCancelable(true);
+            dlgAlert.create().show();
+        }else {
+            changeAcStatus();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void changeAcStatus() {
         String urlStatus;
+        String changes = "";
         final ToggleButton statusButton = (ToggleButton) findViewById(R.id.AcStatus);
         final boolean decide;
         if (statusButton.isChecked()) {
             urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOn";
             decide = true;
+            if(decide != lastState.getStatus())
+                changes += getString(R.string.NotiAcStatusOn) + "\n";
         } else {
             urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOff";
             decide = false;
+            if(decide != lastState.getStatus())
+                changes += getString(R.string.NotiAcStatusOff) + "\n";
         }
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         GsonRequest<ResultStateBoolean> request =
                 new GsonRequest<ResultStateBoolean>(null, urlStatus, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
                     @Override
                     public void onResponse(ResultStateBoolean response) {
                         if (decide) {
-                            changeAcTemperature();
-                        }else{
-                            Toast.makeText(MainActivity.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                            changeAcTemperature(finalChanges);
+                        }else if(actualDevice.getNotState() && finalChanges.length() > 0){
+                            Notifications noti = new Notifications(finalChanges, actualDevice.getName(), MainActivity.this);
+                            noti.build();
+                            noti.addToLodge();
                         }
                     }
                 }, new com.android.volley.Response.ErrorListener() {
@@ -1117,19 +1335,22 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void changeAcTemperature() {
+    private void changeAcTemperature(String changes) {
 
         String urlTemperature = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setTemperature";
         final TextView temperature = (TextView) findViewById(R.id.TemperatureAc);
         int temp = Integer.parseInt(temperature.getText().toString());
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", String.valueOf(temp));
+        if(lastState.getTemperature() != temp)
+            changes += getString(R.string.NotiAcTemperature) + "\n";
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        changeAcMode();
+                        changeAcMode(finalChanges);
                     }
                 },
                 new Response.ErrorListener() {
@@ -1142,20 +1363,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void changeAcMode() {
+    private void changeAcMode(String changes) {
         Spinner modeFridge = (Spinner) findViewById(R.id.ModeAc);
         String newMode = modeFridge.getSelectedItem().toString();
         String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setMode";
 
-
+        if(! lastState.getFirstSpinner().equals(newMode)){
+            changes += getString(R.string.NotiAcMode) + "\n";
+        }
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", newMode);
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        changeVerticalSwing();
+                        changeVerticalSwing(finalChanges);
                     }
                 },
                 new Response.ErrorListener() {
@@ -1168,20 +1392,23 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void changeVerticalSwing() {
+    private void changeVerticalSwing(String changes) {
         Spinner modeFridge = (Spinner) findViewById(R.id.VerticalSwing);
         String newMode = modeFridge.getSelectedItem().toString();
         String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setVerticalSwing";
 
-
+        if(! lastState.getSecondSpinner().equals(newMode)){
+            changes += getString(R.string.NotiAcVS) + "\n";
+        }
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", newMode);
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        changeHorizontalSwing();
+                        changeHorizontalSwing(finalChanges);
                     }
                 },
                 new Response.ErrorListener() {
@@ -1194,21 +1421,23 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void changeHorizontalSwing(){
+    private void changeHorizontalSwing(String changes){
 
         Spinner modeFridge = (Spinner) findViewById(R.id.HorizontalSwing);
         String newMode = modeFridge.getSelectedItem().toString();
         String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setHorizontalSwing";
-
+        if(! lastState.getThirdSpinner().equals(newMode))
+            changes += getString(R.string.NotiAcHS) + "\n";
 
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", newMode);
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        changeFanSpeed();
+                        changeFanSpeed(finalChanges);
                     }
                 },
                 new Response.ErrorListener() {
@@ -1222,21 +1451,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void changeFanSpeed(){
+    private void changeFanSpeed(String changes){
 
         Spinner modeFridge = (Spinner) findViewById(R.id.FanSpeed);
         String newMode = modeFridge.getSelectedItem().toString();
         String urlMode = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/setFanSpeed";
-
+        if(! lastState.getForthSpinner().equals(newMode)){
+            changes += getString(R.string.NotiAcFS);
+        }
 
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", newMode);
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlMode, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(MainActivity.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                    if(actualDevice.getNotState() && finalChanges.length() > 0){
+                        Notifications noti = new Notifications(finalChanges, actualDevice.getName(), MainActivity.this);
+                        noti.build();
+                        noti.addToLodge();
+                    }
                     }
                 },
                 new Response.ErrorListener() {
@@ -1251,32 +1487,55 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void acceptLamp(View view) {
-        // if bla bla
-        changeLampStatus();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        final TextView temperature = (TextView) findViewById(R.id.BrightnessLamp);
+        int brightness = Integer.parseInt(temperature.getText().toString());
+        if(brightness < 0 || brightness > 100){
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Lamp: Brightness must be between 0 and 100");
+            dlgAlert.setTitle("Information");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.setCancelable(true);
+            dlgAlert.create().show();
+        } else {
+            changeLampStatus();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void changeLampStatus() {
         String urlStatus;
+        String changes = "";
         final ToggleButton statusButton = (ToggleButton) findViewById(R.id.StatusLamp);
         final boolean decide;
         if (statusButton.isChecked()) {
             urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOn";
             decide = true;
+            if(decide != lastState.getStatus())
+                changes += getString(R.string.NotiLampOn) + "\n";
         } else {
             urlStatus = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/turnOff";
             decide = false;
+            if(decide != lastState.getStatus())
+                changes += getString(R.string.NotiLampOn) + "\n";
         }
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         GsonRequest<ResultStateBoolean> request =
                 new GsonRequest<ResultStateBoolean>(null, urlStatus, ResultStateBoolean.class, null, new com.android.volley.Response.Listener<ResultStateBoolean>() {
                     @Override
                     public void onResponse(ResultStateBoolean response) {
                         if (decide) {
-                            changeBrightness();
-                        }else{
-                            Toast.makeText(MainActivity.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                            changeBrightness(finalChanges);
+                        }else if(actualDevice.getNotState() && finalChanges.length() > 0){
+                            Notifications noti = new Notifications(finalChanges, actualDevice.getName(), MainActivity.this);
+                            noti.build();
+                            noti.addToLodge();
                         }
                     }
                 }, new com.android.volley.Response.ErrorListener() {
@@ -1290,19 +1549,26 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void changeBrightness() {
+    private void changeBrightness(String changes) {
 
         String urlTemperature = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/changeBrightness";
         final TextView temperature = (TextView) findViewById(R.id.BrightnessLamp);
         int temp = Integer.parseInt(temperature.getText().toString());
+        if(temp != lastState.getBrightness())
+            changes += getString(R.string.NotiLampBright);
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", String.valueOf(temp));
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(MainActivity.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                    if(actualDevice.getNotState() && finalChanges.length() > 0) {
+                        Notifications noti = new Notifications(finalChanges, actualDevice.getName(), MainActivity.this);
+                        noti.build();
+                        noti.addToLodge();
+                    }
                     }
                 },
                 new Response.ErrorListener() {
@@ -1313,6 +1579,18 @@ public class MainActivity extends AppCompatActivity {
                 });
         requestQueue.add(request);
 
+    }
+
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, MainActivity.class);
+        startActivity(refresh);
+        finish();
     }
 }
 
