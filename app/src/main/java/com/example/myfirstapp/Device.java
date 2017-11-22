@@ -9,6 +9,7 @@ public class Device {
     private String name;
     private String typeId;
     private String meta;
+    private boolean notification = false;
 
     public Device(String id, String name, String typeId, String meta){
         this.id = id;
@@ -19,6 +20,14 @@ public class Device {
 
     public String getName(){
         return name;
+    }
+
+    public boolean getNotState(){
+        return notification;
+    }
+
+    public void setNotState(boolean b){
+        notification = b;
     }
 
     public String getType(){
