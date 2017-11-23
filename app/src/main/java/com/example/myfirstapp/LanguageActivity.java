@@ -71,6 +71,8 @@ public class LanguageActivity extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             final ViewHolder viewHolder;
+            SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+            boolean silent = settings.getBoolean("silentMode", false);
             if (convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(context);
                 convertView = inflater.inflate(R.layout.language, null);
@@ -80,6 +82,12 @@ public class LanguageActivity extends AppCompatActivity {
                 viewHolder.s = (RadioButton) convertView
                         .findViewById(R.id.simpleSwitch);
                 convertView.setTag(viewHolder);
+                if(silent && position == 0){
+                    viewHolder.s.setChecked(true);
+                }
+                if(! silent && position == 1){
+                    viewHolder.s.setChecked(true);
+                }
                 buttons.add(viewHolder.s);
 
                 viewHolder.s.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +96,7 @@ public class LanguageActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         switch (position){
                             case 0:{
+                                buttons.get(1).setChecked(false);
                                 Locale myLocale = new Locale("en");
                                 Resources res = getResources();
                                 DisplayMetrics dm = res.getDisplayMetrics();
@@ -98,11 +107,12 @@ public class LanguageActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = settings.edit();
                                 editor.putBoolean("silentMode", true);
                                 editor.commit();
-                                Intent intent = new Intent(LanguageActivity.this, MainActivity.class);
-                                startActivity(intent);
+                                //Intent intent = new Intent(LanguageActivity.this, MainActivity.class);
+                                //startActivity(intent);
                                 break;
                             }
                             case 1:{
+                                buttons.get(0).setChecked(false);
                                 Locale myLocale = new Locale("es");
                                 Resources res = getResources();
                                 DisplayMetrics dm = res.getDisplayMetrics();
@@ -113,8 +123,8 @@ public class LanguageActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = settings.edit();
                                 editor.putBoolean("silentMode", false);
                                 editor.commit();
-                                Intent intent = new Intent(LanguageActivity.this, MainActivity.class);
-                                startActivity(intent);
+                                //Intent intent = new Intent(LanguageActivity.this, MainActivity.class);
+                                //startActivity(intent);
                                 break;
 
                             }
