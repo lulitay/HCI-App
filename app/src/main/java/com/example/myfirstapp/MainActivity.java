@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     boolean asd = true;
     public static final String PREFS_NAME = "MyPrefsFile";
     View actualLayout = null;
+    String color = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -342,8 +344,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void colorPicker(View view){
+    public void colorPicker(View view) {
         ColorPickerDialogBuilder
+
                 .with(MainActivity.this)
                 .setTitle("Choose color")
                 .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
@@ -351,20 +354,23 @@ public class MainActivity extends AppCompatActivity {
                 .setOnColorSelectedListener(new OnColorSelectedListener() {
                     @Override
                     public void onColorSelected(int selectedColor) {
-                        Toast.makeText(MainActivity.this, "onColorSelected: 0x" + Integer.toHexString(selectedColor), Toast.LENGTH_LONG).show();
-                        Toast.makeText(MainActivity.this, "onColorSelected: 0x" + Integer.toHexString(selectedColor).substring(2), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, "onColorSelected: 0x" + Integer.toHexString(selectedColor), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, "onColorSelected: 0x" + Integer.toHexString(selectedColor).substring(2), Toast.LENGTH_LONG).show();
+
                     }
                 })
-                .setPositiveButton("ok", new ColorPickerClickListener() {
+                .setPositiveButton(getString(R.string.Accept), new ColorPickerClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
-                        Toast.makeText(MainActivity.this, "onClick 1: onColorSelected: 0x" + Integer.toHexString(selectedColor).substring(2), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, "onClick 1: onColorSelected: 0x" + Integer.toHexString(selectedColor).substring(2), Toast.LENGTH_LONG).show();
+                        TextView btn = findViewById(R.id.colorp);
+                        btn.setBackgroundColor(selectedColor);
+                        color = Integer.toHexString(selectedColor).substring(2);
                     }
                 })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.Cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MainActivity.this, "onClick 2", Toast.LENGTH_LONG).show();
                     }
                 })
                 .build()
@@ -810,6 +816,9 @@ public class MainActivity extends AppCompatActivity {
         TextView desc = findViewById(R.id.LampDescription);
         title.setText(lamp.getName());
         desc.setText(getString(R.string.Description) + ": " + lamp.getMeta());
+        final TextView btn = findViewById(R.id.colorp);
+        String color = "ff" + response.getResult().getColor();
+        btn.setBackgroundColor((int) Long.parseLong(color, 16));
 
 
         ToggleButton StatusButton = (ToggleButton) findViewById(R.id.StatusLamp);
@@ -819,14 +828,17 @@ public class MainActivity extends AppCompatActivity {
         final String lastBrightness = String.valueOf(response.getResult().getBrightness());
         brightness.setText(lastBrightness);
         lastState.setBrightness(response.getResult().getBrightness());
+        lastState.setFirstSpinner(response.getResult().getColor());
 
         if (response.getResult().getStatus().equals("on")) {
             StatusButton.setChecked(true);
             brightness.setEnabled(true);
+            btn.setEnabled(true);
             lastState.setStatus(true);
         } else {
             StatusButton.setChecked(false);
             brightness.setEnabled(false);
+            btn.setEnabled(false);
             lastState.setStatus(false);
 
         }
@@ -836,9 +848,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!isChecked) {
                     brightness.setEnabled(false);
+                    btn.setEnabled(false);
                     brightness.setText(lastBrightness);
                 } else {
                     brightness.setEnabled(true);
+                    btn.setEnabled(true);
                 }
             }
         });
@@ -1617,20 +1631,47 @@ public class MainActivity extends AppCompatActivity {
         final TextView temperature = (TextView) findViewById(R.id.BrightnessLamp);
         int temp = Integer.parseInt(temperature.getText().toString());
         if(temp != lastState.getBrightness())
-            changes += getString(R.string.NotiLampBright);
+            changes += getString(R.string.NotiLampBright) +"\n";
         Map<String, Object> jsonParams = new HashMap<>();
         jsonParams.put("0", String.valueOf(temp));
+        RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final String finalChanges = changes;
+        final String finalChanges1 = changes;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        changeColor(finalChanges1);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
+                    }
+                });
+        requestQueue.add(request);
+
+    }
+
+    private void changeColor(String changes) {
+
+        String urlTemperature = "http://10.0.2.2:8080/api/devices/" + actualIdDevice + "/changeColor";
+        if(! lastState.getFirstSpinner().equals(color))
+            changes += getString(R.string.NotiColor);
+        Map<String, Object> jsonParams = new HashMap<>();
+        jsonParams.put("0", color);
         RequestQueue requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         final String finalChanges = changes;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, urlTemperature, new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                    if(actualDevice.getNotState() && finalChanges.length() > 0) {
-                        Notifications noti = new Notifications(finalChanges, actualDevice.getName(), MainActivity.this);
-                        noti.build();
-                        noti.addToLodge();
-                    }
+                        if(actualDevice.getNotState() && finalChanges.length() > 0) {
+                            Notifications noti = new Notifications(finalChanges, actualDevice.getName(), MainActivity.this);
+                            noti.build();
+                            noti.addToLodge();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
