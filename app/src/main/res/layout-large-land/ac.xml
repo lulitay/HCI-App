@@ -5,6 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:layout_width="484dp"
+        android:layout_height="314dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.496">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/smart_house_logo_transparent" />
+    </FrameLayout>
+
     <TextView
         android:id="@+id/acTitle"
         android:layout_width="wrap_content"
@@ -24,21 +44,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/acTitle" android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/acTitle" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:text="@string/Status"
         android:textSize="24dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/acStatus"
-        app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="16dp"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <ToggleButton
         android:id="@+id/acStatus"
@@ -53,35 +75,17 @@
         app:layout_constraintTop_toBottomOf="@+id/acDescription" />
 
     <Button
-        android:id="@+id/cancelDoor"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="22dp"
-        android:background="?attr/colorBackgroundFloating"
-        android:text="@string/Cancel"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/acceptDoor"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/acceptDoor"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="16dp"
         android:background="@color/colorAccent"
-        android:text="@string/Accept"
         android:onClick="acceptAc"
+        android:text="@string/Accept"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cancelDoor" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView11"
@@ -127,16 +131,18 @@
         android:id="@+id/modeAc"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="60dp"
         android:entries="@array/AcMode"
         app:layout_constraintRight_toLeftOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" android:layout_marginEnd="24dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <EditText
         android:id="@+id/temperatureAc"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="60dp"
         android:ems="10"
@@ -145,7 +151,7 @@
         android:textSize="12sp"
         android:textStyle="italic"
         app:layout_constraintRight_toLeftOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" android:layout_marginEnd="24dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
         android:id="@+id/textView25"
@@ -212,4 +218,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp" />
+
 </android.support.constraint.ConstraintLayout>
