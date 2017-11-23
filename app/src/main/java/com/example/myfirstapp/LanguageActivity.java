@@ -43,8 +43,8 @@ public class LanguageActivity extends AppCompatActivity {
 
         ArrayList data = new ArrayList<String>();
 
-        data.add(getString(R.string.English));
-        data.add(getString(R.string.Español));
+        data.add("English");
+        data.add("Español");
 
         ListView listView = (ListView) findViewById(R.id.ListView);
 
