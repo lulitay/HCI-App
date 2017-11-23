@@ -6,6 +6,26 @@
     android:layout_height="match_parent"
     tools:layout_editor_absoluteY="25dp">
 
+    <FrameLayout
+        android:layout_width="484dp"
+        android:layout_height="314dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.496">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/smart_house_logo_transparent" />
+    </FrameLayout>
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/deviceToolbar2"
         android:layout_width="match_parent"
