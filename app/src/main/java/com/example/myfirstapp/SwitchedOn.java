@@ -52,6 +52,7 @@ public class SwitchedOn extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         setTitle( getString(R.string.Switched));
+        saveClass();
         context = this.getApplicationContext();
         final ArrayList<Device> devices = new ArrayList<Device>();
         final ArrayList<Device> devicesOn = new ArrayList<Device>();
@@ -77,11 +78,18 @@ public class SwitchedOn extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(SwitchedOn.this, "error desconocido", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         request.setTag("asd");
         requestQueue.add(request);
+    }
+
+    public void saveClass(){
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("class", "SwitchedOn");
+        editor.commit();
     }
 
     @Override
@@ -151,7 +159,7 @@ public class SwitchedOn extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 Log.e("dsa", error.toString());
-                                Toast.makeText(SwitchedOn.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                                Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                             }
                         });
                 request.setTag("asd");
@@ -178,7 +186,7 @@ public class SwitchedOn extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 Log.e("dsa", error.toString());
-                                Toast.makeText(SwitchedOn.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                                Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                             }
                         });
                 request.setTag("asd");
@@ -205,7 +213,7 @@ public class SwitchedOn extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 Log.e("dsa", error.toString());
-                                Toast.makeText(SwitchedOn.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                                Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                             }
                         });
                 request.setTag("asd");
@@ -239,7 +247,7 @@ public class SwitchedOn extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     Log.e("dsa", error.toString());
-                                    Toast.makeText(SwitchedOn.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                                 }
                             });
                     request.setTag("asd");
@@ -260,7 +268,7 @@ public class SwitchedOn extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     Log.e("dsa", error.toString());
-                                    Toast.makeText(SwitchedOn.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                                 }
                             });
                     request.setTag("asd");
@@ -283,7 +291,7 @@ public class SwitchedOn extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     Log.e("dsa", error.toString());
-                                    Toast.makeText(SwitchedOn.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                                 }
                             });
                     request.setTag("asd");
@@ -697,7 +705,7 @@ public class SwitchedOn extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         request.setTag("asd");
@@ -739,7 +747,7 @@ public class SwitchedOn extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestStatus.setTag("status");
@@ -779,7 +787,7 @@ public class SwitchedOn extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestLock.setTag("lock");
@@ -789,16 +797,16 @@ public class SwitchedOn extends AppCompatActivity {
     }
 
     public void acceptFridge(View view){
+        notificationsDevices(actualDevice);
         final TextView temperature = (TextView) findViewById(R.id.FridgeTemperature);
         int temp = Integer.parseInt(temperature.getText().toString());
         final TextView temperatureFreezer = (TextView) findViewById(R.id.FreezerTemeprature);
         int tempFreezer = Integer.parseInt(temperatureFreezer.getText().toString());
         if( (tempFreezer < -20 || tempFreezer > -8) && (temp > 8 || temp < 2)){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Fridge: Freezer Temperature must be between -20 and -8 \n\n" +
-                    "Fridge: Temperature must be between 2 and 8");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.BothErrorsFridge));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -809,9 +817,9 @@ public class SwitchedOn extends AppCompatActivity {
         }
         else if(temp > 8 || temp < 2){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Fridge: Temperature must be between 2 and 8");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.errorTemperatureFridge));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -822,9 +830,9 @@ public class SwitchedOn extends AppCompatActivity {
         }
         else if(tempFreezer < -20 || tempFreezer > -8){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Fridge: Freezer temperature must be between -20 and -8");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.errorTemperatureFreezerFridge));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -863,7 +871,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -893,7 +901,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestQueue.add(request);
@@ -925,7 +933,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestQueue.add(request);
@@ -938,9 +946,9 @@ public class SwitchedOn extends AppCompatActivity {
         int temp = Integer.parseInt(temperature.getText().toString());
         if(temp > 230 || temp < 90){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Oven: Temperature must be between 90 and 230");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.ErrorOven));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -992,7 +1000,7 @@ public class SwitchedOn extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         request.setTag("status");
@@ -1022,7 +1030,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestQueue.add(request);
@@ -1050,7 +1058,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1078,7 +1086,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1112,7 +1120,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1126,9 +1134,9 @@ public class SwitchedOn extends AppCompatActivity {
         int temp = Integer.parseInt(temperature.getText().toString());
         if(temp > 38 || temp < 18){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Ac: Temperature must be between 18 and 38");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.ErrorAc));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -1177,7 +1185,7 @@ public class SwitchedOn extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         request.setTag("status");
@@ -1205,7 +1213,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestQueue.add(request);
@@ -1234,7 +1242,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1263,7 +1271,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1292,7 +1300,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1327,7 +1335,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1341,9 +1349,9 @@ public class SwitchedOn extends AppCompatActivity {
         int brightness = Integer.parseInt(temperature.getText().toString());
         if(brightness < 0 || brightness > 100){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Lamp: Brightness must be between 0 and 100");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.ErrorLamp));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -1392,7 +1400,7 @@ public class SwitchedOn extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         request.setTag("status");
@@ -1424,7 +1432,7 @@ public class SwitchedOn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SwitchedOn.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SwitchedOn.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestQueue.add(request);
