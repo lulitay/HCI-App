@@ -35,7 +35,7 @@
     <Button
         android:id="@+id/home"
         android:layout_width="180dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:background="@android:color/background_light"
         android:onClick="openHome"
@@ -48,7 +48,7 @@
     <Button
         android:id="@+id/devices"
         android:layout_width="180dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/bottom_selected"
         android:text="@string/Devices"
         app:layout_constraintBaseline_toBaselineOf="@+id/SwitchedOn"
@@ -58,27 +58,20 @@
     <Button
         android:id="@+id/SwitchedOn"
         android:layout_width="180dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="2dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
         android:background="@android:color/background_light"
         android:onClick="openSwitchedOn"
         android:text="@string/Switched"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/devices"
-        app:layout_constraintTop_toBottomOf="@+id/GridView" />
+        app:layout_constraintStart_toEndOf="@+id/devices" />
 
     <GridView
         android:id="@+id/GridView"
-        android:layout_width="578dp"
-        android:layout_height="222dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="72dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:columnWidth="100dp"
         android:gravity="center"
         android:numColumns="auto_fit"
@@ -88,8 +81,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/DeviceToolbar"
-        app:layout_constraintVertical_bias="0.842">
+        app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar">
 
     </GridView>
 

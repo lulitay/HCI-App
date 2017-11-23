@@ -194,5 +194,14 @@
     <string name="NotiLampOn">The lamp is on</string>
     <string name="NotiLampOff">The lamp is off</string>
     <string name="NotiLampBright">The brightness has been changed</string>
+    <string name="errorConnection">Connection error</string>
+    <string name="errorTemperatureFridge">Fridge: Temperature must be between 2 and 8 grades</string>
+    <string name="errorTemperatureFreezerFridge">Fridge: Freezer temperature must be between -20 and -8 grades</string>
+    <string name="info">Information</string>
+    <string name="BothErrorsFridge">Fridge: Freezer Temperature must be between -20 and -8 grades \n \n Fridge: Temperature must be between 2 and 8 grades</string>
+    <string name="ErrorOven">Oven: Temperature must be between 90 and 230 grades</string>
+    <string name="ErrorAc">Ac: Temperature must be between 18 and 38 grades</string>
+    <string name="ErrorLamp">Lamp: Brightness must be between 0 and 100</string>
+
 
 </resources>

@@ -118,5 +118,12 @@
     <string name="NotiLampOn">La lampara esta encendida</string>
     <string name="NotiLampOff">La lampara esta apagada</string>
     <string name="NotiLampBright">El brillo fue modificado</string>
-
+    <string name="errorConnection">Error de connecion</string>
+    <string name="errorTemperatureFridge">Heladera: La temperatura debe estar entre 2 y 8 grados</string>
+    <string name="errorTemperatureFreezerFridge">Heladera: La temperatura del freezer debe estar entre -20 y -8 grados</string>
+    <string name="info">Informacion</string>
+    <string name="BothErrorsFridge">Heladera: La temperatura del freezer debe estar entre -20 y -8 grados \n \n Heladera: La temperatura debe estar entre 2 y 8 grados</string>
+    <string name="ErrorOven">Horno: La temperatura debe estar entre 90 y 230 grados</string>
+    <string name="ErrorAc">Ac: La temperatura debe estar entre 18 y 38 grados</string>
+    <string name="ErrorLamp">Lampara: El brillo debe estar entre 0 y 100</string>
 </resources>

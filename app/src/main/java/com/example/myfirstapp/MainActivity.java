@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
     String actualIdDevice;
     Device actualDevice;
     LastState lastState = new LastState();
+    boolean asd = true;
     public static final String PREFS_NAME = "MyPrefsFile";
+    View actualLayout = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +62,11 @@ public class MainActivity extends AppCompatActivity {
         res.updateConfiguration(conf, dm);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout); //con esto el decimos cual es el layout grafico, osea donde estan las ID's
-
         Toolbar myToolbar = (Toolbar) findViewById(R.id.DeviceToolbar);
         setSupportActionBar(myToolbar);
         //createTabHost(savedInstanceState);
         setTitle("Smart Home");
-
-
+        saveClass();
         Log.d("asd", "whut");
         final ArrayList<Device> devices = new ArrayList<Device>();
         String url = "http://10.0.2.2:8080/api/devices";
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(MainActivity.this, "error desconocido", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         request.setTag("asd");
@@ -97,6 +98,35 @@ public class MainActivity extends AppCompatActivity {
 
         //Toast.makeText(MainActivity.this, "Finalizado", Toast.LENGTH_LONG).show();
 
+    }
+
+    public void saveClass(){
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("class", "MainActivity");
+        editor.commit();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+
+
+    public void setLanguaje(){
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        boolean silent = settings.getBoolean("silentMode", false);
+        String language;
+        if(silent)
+            language = "en";
+        else
+            language = "es";
+        Locale myLocale = new Locale(language);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 
     private void notificationsDevices(ArrayList<Device> devices){
@@ -129,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < devices.size(); i++) {
             LinearLayout lin = individual[i];
             lin.addView(createView(devices.get(i)));
-            lin.setPadding(0, 0, 20, 0);
+            lin.setPadding(0, 0, 30, 0);
             lin.setClickable(true);
             lin.setOnClickListener(new CustomOnClickListener(i) {
                 @Override
@@ -155,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         individual[i] = new LinearLayout(this);
         LinearLayout lin = individual[i];
         lin.addView(createView(devices.get(i)));
-        lin.setPadding(0, 0, 20, 0);
+        lin.setPadding(0, 0, 30, 0);
         lin.setClickable(true);
         lin.setOnClickListener(new CustomOnClickListener(i) {
             @Override
@@ -186,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("dsa", error.toString());
-                            Toast.makeText(MainActivity.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                         }
                     });
             request.setTag("asd");
@@ -208,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("dsa", error.toString());
-                            Toast.makeText(MainActivity.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                         }
                     });
             request.setTag("asd");
@@ -232,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("dsa", error.toString());
-                            Toast.makeText(MainActivity.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                         }
                     });
             request.setTag("asd");
@@ -325,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("dsa", error.toString());
-                            Toast.makeText(MainActivity.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                         }
                     });
             request.setTag("asd");
@@ -347,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("dsa", error.toString());
-                            Toast.makeText(MainActivity.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                         }
                     });
             request.setTag("asd");
@@ -369,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("dsa", error.toString());
-                            Toast.makeText(MainActivity.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                         }
                     });
             request.setTag("asd");
@@ -390,7 +420,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("dsa", error.toString());
-                            Toast.makeText(MainActivity.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                         }
                     });
             request.setTag("asd");
@@ -413,7 +443,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("dsa", error.toString());
-                            Toast.makeText(MainActivity.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                         }
                     });
             request.setTag("asd");
@@ -435,7 +465,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("dsa", error.toString());
-                            Toast.makeText(MainActivity.this, "Error al cargar", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                         }
                     });
             request.setTag("asd");
@@ -851,7 +881,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         request.setTag("asd");
@@ -892,7 +922,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestStatus.setTag("status");
@@ -932,7 +962,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestLock.setTag("lock");
@@ -948,10 +978,9 @@ public class MainActivity extends AppCompatActivity {
         int tempFreezer = Integer.parseInt(temperatureFreezer.getText().toString());
         if( (tempFreezer < -20 || tempFreezer > -8) && (temp > 8 || temp < 2)){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Fridge: Freezer Temperature must be between -20 and -8 \n\n" +
-            "Fridge: Temperature must be between 2 and 8");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.BothErrorsFridge));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -962,9 +991,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(temp > 8 || temp < 2){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Fridge: Temperature must be between 2 and 8");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.errorTemperatureFridge));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -975,9 +1004,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(tempFreezer < -20 || tempFreezer > -8){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Fridge: Freezer temperature must be between -20 and -8");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.errorTemperatureFreezerFridge));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -1016,7 +1045,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1046,7 +1075,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestQueue.add(request);
@@ -1078,7 +1107,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestQueue.add(request);
@@ -1090,9 +1119,9 @@ public class MainActivity extends AppCompatActivity {
         int temp = Integer.parseInt(temperature.getText().toString());
         if(temp > 230 || temp < 90){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Oven: Temperature must be between 90 and 230");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.ErrorOven));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -1144,7 +1173,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         request.setTag("status");
@@ -1174,7 +1203,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestQueue.add(request);
@@ -1202,7 +1231,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1230,7 +1259,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1264,7 +1293,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1277,9 +1306,9 @@ public class MainActivity extends AppCompatActivity {
         int temp = Integer.parseInt(temperature.getText().toString());
         if(temp > 38 || temp < 18){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Ac: Temperature must be between 18 and 38");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.ErrorAc));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -1328,7 +1357,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         request.setTag("status");
@@ -1356,7 +1385,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestQueue.add(request);
@@ -1385,7 +1414,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1414,7 +1443,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1443,7 +1472,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1478,7 +1507,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -1491,9 +1520,9 @@ public class MainActivity extends AppCompatActivity {
         int brightness = Integer.parseInt(temperature.getText().toString());
         if(brightness < 0 || brightness > 100){
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Lamp: Brightness must be between 0 and 100");
-            dlgAlert.setTitle("Information");
-            dlgAlert.setPositiveButton("Ok",
+            dlgAlert.setMessage(getString(R.string.ErrorLamp));
+            dlgAlert.setTitle(getString(R.string.info));
+            dlgAlert.setPositiveButton(getString(R.string.Accept),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -1542,7 +1571,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("dsa", error.toString());
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         request.setTag("status");
@@ -1574,7 +1603,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error to send", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.errorConnection), Toast.LENGTH_LONG).show();
                     }
                 });
         requestQueue.add(request);
