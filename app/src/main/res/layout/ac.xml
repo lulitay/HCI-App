@@ -34,113 +34,95 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="15dp"
         android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar" android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/AcTitle" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="26dp"
         android:text="@string/Status"
         android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AcDescription" android:layout_marginStart="16dp"/>
+        app:layout_constraintBaseline_toBaselineOf="@+id/AcStatus"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <ToggleButton
         android:id="@+id/AcStatus"
         android:layout_width="120dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="316dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
         android:text="ToggleButton"
         android:textOff="@string/Off"
         android:textOn="@string/On"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/CancelDoor"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="22dp"
-        android:background="?attr/colorBackgroundFloating"
-        android:text="@string/Cancel"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AcDescription" />
 
     <Button
         android:id="@+id/AcceptDoor"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="16dp"
         android:background="@color/colorAccent"
-        android:text="@string/Accept"
         android:onClick="acceptAc"
+        android:text="@string/Accept"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/CancelDoor" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="14dp"
         android:text="@string/Temperature"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/TemperatureAc"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="14dp"
         android:text="@string/Mode"
         android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/ModeAc"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="14dp"
         android:text="@string/VerticalSwing"
         android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/VerticalSwing"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="14dp"
         android:text="@string/HorizontalSwing"
         android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/HorizontalSwing"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Spinner
         android:id="@+id/ModeAc"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="22dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
         android:entries="@array/AcMode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TemperatureAc" />
@@ -148,13 +130,13 @@
     <EditText
         android:id="@+id/TemperatureAc"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="number"
         android:text="Temperature"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AcStatus" />
@@ -164,18 +146,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="14dp"
         android:text="@string/FanSpeed"
         android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/FanSpeed"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Spinner
         android:id="@+id/VerticalSwing"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
         android:entries="@array/AcVS"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ModeAc" />
@@ -183,9 +165,10 @@
     <Spinner
         android:id="@+id/HorizontalSwing"
         android:layout_width="120dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="22dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
         android:entries="@array/AcHS"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/VerticalSwing" />
@@ -193,9 +176,10 @@
     <Spinner
         android:id="@+id/FanSpeed"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="22dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
         android:entries="@array/AcFs"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HorizontalSwing" />

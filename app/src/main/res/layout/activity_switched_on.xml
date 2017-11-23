@@ -33,7 +33,7 @@
             android:layout_marginBottom="2dp"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:background="@drawable/bottom_selected"
+            android:background="@android:color/background_light"
             android:text="@string/Home"
             android:onClick="openHome"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:layout_weight="1"
-            android:background="@android:color/background_light"
+            android:background="@drawable/bottom_selected"
             android:text="@string/Switched"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/devices" />

@@ -34,29 +34,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="15dp"
         android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar" android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/BlindsTitle" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="56dp"
         android:text="@string/Status"
-        android:textSize="36sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BlindsDescription" android:layout_marginStart="16dp"/>
+        android:textSize="24sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/BlindsStatus"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <ToggleButton
         android:id="@+id/BlindsStatus"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="56dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
         android:text="ToggleButton"
         android:textOff="@string/Closed"
         android:textOn="@string/Open"
@@ -64,30 +64,16 @@
         app:layout_constraintTop_toBottomOf="@+id/BlindsDescription" />
 
     <Button
-        android:id="@+id/CancelDoor"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="22dp"
-        android:background="?attr/colorBackgroundFloating"
-        android:text="@string/Cancel"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/AcceptBlinds"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="16dp"
         android:background="@color/colorAccent"
         android:onClick="acceptBlinds"
         android:text="@string/Accept"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/CancelDoor" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

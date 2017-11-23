@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.DeviceToolbar);
         setSupportActionBar(myToolbar);
         //createTabHost(savedInstanceState);
-        setTitle( getString(R.string.Home));
+        setTitle("Smart Home");
 
 
         Log.d("asd", "whut");
