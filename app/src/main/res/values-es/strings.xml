@@ -126,4 +126,5 @@
     <string name="ErrorOven">Horno: La temperatura debe estar entre 90 y 230 grados</string>
     <string name="ErrorAc">Ac: La temperatura debe estar entre 18 y 38 grados</string>
     <string name="ErrorLamp">Lampara: El brillo debe estar entre 0 y 100</string>
+    <string name="NotiColor">El color fue modificado</string>
 </resources>
