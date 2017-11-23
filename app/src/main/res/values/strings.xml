@@ -202,6 +202,7 @@
     <string name="ErrorOven">Oven: Temperature must be between 90 and 230 grades</string>
     <string name="ErrorAc">Ac: Temperature must be between 18 and 38 grades</string>
     <string name="ErrorLamp">Lamp: Brightness must be between 0 and 100</string>
+    <string name="NotiColor">The color has been changed</string>
 
 
 </resources>
