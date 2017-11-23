@@ -1,17 +1,24 @@
 package com.example.myfirstapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SettingsActivity extends AppCompatActivity {
+import java.util.Locale;
 
+public class SettingsActivity extends AppCompatActivity {
+    public static final String PREFS_NAME = "MyPrefsFile";
     private FancyAdapter mFancyAdapter;
 
     @Override
@@ -33,6 +40,19 @@ public class SettingsActivity extends AppCompatActivity {
         mFancyAdapter = new FancyAdapter(data);
         listView.setAdapter(mFancyAdapter);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     private class FancyAdapter extends BaseAdapter {
 

@@ -39,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:textColor="#25383C"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
@@ -63,6 +64,7 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#25383C"
         android:layout_marginLeft="16dp"
         android:text="@string/Status"
         android:textSize="36sp"
@@ -97,6 +99,7 @@
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
+        android:textColor="#25383C"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/LockState"

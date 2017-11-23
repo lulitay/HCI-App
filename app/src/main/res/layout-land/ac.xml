@@ -57,6 +57,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/Mode"
                 android:textSize="24dp"
+                android:textColor="#25383C"
                 app:layout_constraintBaseline_toBaselineOf="@+id/ModeAc"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -67,6 +68,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/FanSpeed"
                 android:textSize="24dp"
+                android:textColor="#25383C"
                 app:layout_constraintBaseline_toBaselineOf="@+id/FanSpeed"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -76,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:text="@string/HorizontalSwing"
+                android:textColor="#25383C"
                 android:textSize="24dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/HorizontalSwing"
                 app:layout_constraintLeft_toLeftOf="parent" />
@@ -103,6 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="TextView"
+                android:textColor="#25383C"
                 android:textSize="50dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -142,6 +146,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/Temperature"
                 android:textSize="24dp"
+                android:textColor="#25383C"
                 app:layout_constraintBaseline_toBaselineOf="@+id/TemperatureAc"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -175,6 +180,7 @@
 
             <TextView
                 android:id="@+id/textView5"
+                android:textColor="#25383C"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -190,6 +196,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/VerticalSwing"
                 android:textSize="24dp"
+                android:textColor="#25383C"
                 app:layout_constraintBaseline_toBaselineOf="@+id/VerticalSwing"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
