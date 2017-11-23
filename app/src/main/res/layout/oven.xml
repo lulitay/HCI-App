@@ -41,6 +41,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:textColor="#25383C"
         android:text="TextView"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:text="@string/Status"
+        android:textColor="#25383C"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/StatusOven"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -75,6 +77,7 @@
         android:layout_marginLeft="16dp"
         android:text="@string/Temperature"
         android:textSize="24sp"
+        android:textColor="#25383C"
         app:layout_constraintBaseline_toBaselineOf="@+id/TemperatureOven"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -84,6 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:text="@string/HeatMode"
+        android:textColor="#25383C"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/HeatMode"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -94,6 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/GrillMode"
+        android:textColor="#25383C"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/GrillMode"
         app:layout_constraintStart_toStartOf="parent" />
@@ -104,6 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:text="@string/ConvMode"
+        android:textColor="#25383C"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/ConvMode"
         app:layout_constraintLeft_toLeftOf="parent" />
