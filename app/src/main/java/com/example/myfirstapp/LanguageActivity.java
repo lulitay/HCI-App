@@ -107,8 +107,18 @@ public class LanguageActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = settings.edit();
                                 editor.putBoolean("silentMode", true);
                                 editor.commit();
-                                //Intent intent = new Intent(LanguageActivity.this, MainActivity.class);
-                                //startActivity(intent);
+                                String actualClass = settings.getString("class", "MainActivity");
+                                if(actualClass.equals("MainActivity")){
+                                    Intent intent = new Intent(LanguageActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }else if(actualClass.equals("Devices")){
+                                    Intent intent = new Intent(LanguageActivity.this, Devices.class);
+                                    startActivity(intent);
+                                }else{
+                                    Intent intent = new Intent(LanguageActivity.this, SwitchedOn.class);
+                                    startActivity(intent);
+                                }
+
                                 break;
                             }
                             case 1:{
@@ -123,8 +133,18 @@ public class LanguageActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = settings.edit();
                                 editor.putBoolean("silentMode", false);
                                 editor.commit();
-                                //Intent intent = new Intent(LanguageActivity.this, MainActivity.class);
-                                //startActivity(intent);
+                                String actualClass = settings.getString("class", "MainActivity");
+                                if(actualClass.equals("MainActivity")){
+                                    Intent intent = new Intent(LanguageActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }else if(actualClass.equals("Devices")){
+                                    Intent intent = new Intent(LanguageActivity.this, Devices.class);
+                                    startActivity(intent);
+                                }else{
+                                    Intent intent = new Intent(LanguageActivity.this, SwitchedOn.class);
+                                    startActivity(intent);
+                                }
+
                                 break;
 
                             }
