@@ -28,6 +28,10 @@ import android.widget.ToggleButton;
 
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.flask.colorpicker.ColorPickerView;
+import com.flask.colorpicker.OnColorSelectedListener;
+import com.flask.colorpicker.builder.ColorPickerClickListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -336,6 +340,35 @@ public class MainActivity extends AppCompatActivity {
 
         return gridView;
 
+    }
+
+    public void colorPicker(View view){
+        ColorPickerDialogBuilder
+                .with(MainActivity.this)
+                .setTitle("Choose color")
+                .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
+                .density(12)
+                .setOnColorSelectedListener(new OnColorSelectedListener() {
+                    @Override
+                    public void onColorSelected(int selectedColor) {
+                        Toast.makeText(MainActivity.this, "onColorSelected: 0x" + Integer.toHexString(selectedColor), Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "onColorSelected: 0x" + Integer.toHexString(selectedColor).substring(2), Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setPositiveButton("ok", new ColorPickerClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+                        Toast.makeText(MainActivity.this, "onClick 1: onColorSelected: 0x" + Integer.toHexString(selectedColor).substring(2), Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, "onClick 2", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .build()
+                .show();
     }
 
     private void startLayout(final ArrayList<Device> devices, final int position) {
