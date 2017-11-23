@@ -1,15 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="595dp"
-        android:layout_height="249dp"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/AcceptOven"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/smart_house_logo_transparent" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/AcceptOven"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:onClick="acceptOven"
+        android:text="@string/Accept"
+        android:textColor="@android:color/background_light"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/AcceptOven"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DeviceToolbar">
@@ -29,20 +59,6 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/AcceptOven"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                android:onClick="acceptOven"
-                android:text="@string/Accept"
-                android:textColor="@android:color/background_light"
-                android:textSize="20dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/CancelButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/CancelButton" />
 
             <EditText
                 android:id="@+id/TemperatureOven"
@@ -129,20 +145,6 @@
                 android:textSize="26dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/ConvMode"
                 app:layout_constraintLeft_toLeftOf="parent" />
-
-            <Button
-                android:id="@+id/CancelButton"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/background_light"
-                android:text="@string/Cancel"
-                android:textColor="@color/colorAccent"
-                android:textSize="20dp"
-                app:layout_constraintEnd_toStartOf="@+id/AcceptOven"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
             <Spinner
                 android:id="@+id/GrillMode"
