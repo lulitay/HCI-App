@@ -28,14 +28,14 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".SwitchedOn"
             android:windowSoftInputMode="adjustPan"/>
-    <activity
-        android:name=".SettingsActivity"
-        android:label="@string/title_activity_settings">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.myfirstapp.MainActivity" />
-    </activity>
-    <activity
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.myfirstapp.MainActivity" />
+        </activity>
+        <activity
         android:name=".NotificationsActivity"
         android:screenOrientation="fullSensor"
         android:windowSoftInputMode="adjustPan"
