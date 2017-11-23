@@ -14,6 +14,7 @@
         android:background="@android:color/background_light"
         android:onClick="openHome"
         android:text="@string/Home"
+        app:layout_constraintBaseline_toBaselineOf="@+id/devices"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/devices"
         app:layout_constraintHorizontal_bias="0.5"
@@ -27,6 +28,7 @@
         android:background="@android:color/background_light"
         android:onClick="openDevices"
         android:text="@string/Devices"
+        app:layout_constraintBaseline_toBaselineOf="@+id/switchedOn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/switchedOn"
         app:layout_constraintHorizontal_bias="0.5"
@@ -74,7 +76,7 @@
 
     <GridView
         android:id="@+id/GridSwitchedOn"
-        android:layout_width="356dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:columnWidth="100dp"
         android:numColumns="auto_fit"
