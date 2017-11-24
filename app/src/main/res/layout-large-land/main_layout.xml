@@ -29,11 +29,9 @@
         android:id="@+id/home5"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginStart="8dp"
         android:background="@drawable/bottom_selected"
         android:text="@string/Home"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/devices5"
         app:layout_constraintEnd_toStartOf="@+id/devices5"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
@@ -42,11 +40,10 @@
         android:id="@+id/devices5"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
         android:background="@android:color/background_light"
         android:onClick="openDevices"
         android:text="@string/Devices"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/switchedOn5"
         app:layout_constraintEnd_toStartOf="@+id/switchedOn5"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/home5" />
@@ -55,8 +52,8 @@
         android:id="@+id/switchedOn5"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
         android:background="@android:color/background_light"
+        android:onClick="openSwitchedOn"
         android:text="@string/Switched"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +71,7 @@
 
     <TextView
         android:id="@+id/textView34"
-        android:layout_width="107dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
@@ -126,6 +123,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView35">
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal" />
